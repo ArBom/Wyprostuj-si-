@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28307.1433
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wyprostuj się", "Wyprostuj się\Wyprostuj się.csproj", "{2A2738BC-D5AB-48BD-A2DF-A2B5677D98C6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FBBA508A-7637-410C-A55C-6982A377F201} = {FBBA508A-7637-410C-A55C-6982A377F201}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WyprostujSieBackground", "WyprostujSieBackground\WyprostujSieBackground.csproj", "{FBBA508A-7637-410C-A55C-6982A377F201}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{2A2738BC-D5AB-48BD-A2DF-A2B5677D98C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A2738BC-D5AB-48BD-A2DF-A2B5677D98C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A2738BC-D5AB-48BD-A2DF-A2B5677D98C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBBA508A-7637-410C-A55C-6982A377F201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBBA508A-7637-410C-A55C-6982A377F201}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBBA508A-7637-410C-A55C-6982A377F201}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBBA508A-7637-410C-A55C-6982A377F201}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

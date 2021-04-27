@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using System.Windows.Media.Imaging;
 
 using Microsoft.Kinect;
 
-namespace Wyprostuj_sie.cs
+namespace WyprostujSieBackground
 {
     class Kinect
     {
@@ -25,12 +26,15 @@ namespace Wyprostuj_sie.cs
         private readonly Brush inferredJointBrush = Brushes.Yellow;
         private readonly Brush trackedJointBrush = new SolidColorBrush(Color.FromArgb(255, 68, 192, 68));
 
+        private readonly bool draw;
+        public bool takePic = false;
+
         public MultiSourceFrameReader multiSourceFrameReader;
         public ColorFrameReader colorFrameReader;
         public WriteableBitmap colorBitmap = null;
 
-        public delegate void NewData();
-        public NewData newData = null;
+        public Action newData = null;
+        public Action takenPic = null;
 
         public double SpineAn { get; private set; } = 0;
         public double BokAn { get; private set; } = 0;
@@ -166,34 +170,59 @@ namespace Wyprostuj_sie.cs
         {
             MultiSourceFrame reference = e.FrameReference.AcquireFrame();
 
-            using (var colorFrame = reference.ColorFrameReference.AcquireFrame())
+            if (draw || takePic)
             {
-                if (colorFrame != null)
+                using (var colorFrame = reference.ColorFrameReference.AcquireFrame())
                 {
-                    FrameDescription colorFrameDescription = colorFrame.FrameDescription;
-
-                    using (KinectBuffer colorBuffer = colorFrame.LockRawImageBuffer())
+                    if (colorFrame != null)
                     {
-                        if (this.colorBitmap == null)
+                        FrameDescription colorFrameDescription = colorFrame.FrameDescription;
+
+                        using (KinectBuffer colorBuffer = colorFrame.LockRawImageBuffer())
                         {
-                            this.colorBitmap = new WriteableBitmap(colorFrameDescription.Width, colorFrameDescription.Height, 96, 96, PixelFormats.Bgr32, null);
+                            if (this.colorBitmap == null)
+                            {
+                                this.colorBitmap = new WriteableBitmap(colorFrameDescription.Width, colorFrameDescription.Height, 96, 96, PixelFormats.Bgr32, null);
+                            }
+
+                            this.colorBitmap.Lock();
+
+                            // verify data and write the new color frame data to the display bitmap
+                            if ((colorFrameDescription.Width == this.colorBitmap.PixelWidth) && (colorFrameDescription.Height == this.colorBitmap.PixelHeight))
+                            {
+                                colorFrame.CopyConvertedFrameDataToIntPtr(
+                                    this.colorBitmap.BackBuffer,
+                                    (uint)(colorFrameDescription.Width * colorFrameDescription.Height * 4),
+                                    ColorImageFormat.Bgra);
+
+                                this.colorBitmap.AddDirtyRect(new Int32Rect(0, 0, this.colorBitmap.PixelWidth, this.colorBitmap.PixelHeight));
+                            }
+                            this.colorBitmap.Unlock();
                         }
-
-                        this.colorBitmap.Lock();
-
-                        // verify data and write the new color frame data to the display bitmap
-                        if ((colorFrameDescription.Width == this.colorBitmap.PixelWidth) && (colorFrameDescription.Height == this.colorBitmap.PixelHeight))
-                        {
-                            colorFrame.CopyConvertedFrameDataToIntPtr(
-                                this.colorBitmap.BackBuffer,
-                                (uint)(colorFrameDescription.Width * colorFrameDescription.Height * 4),
-                                ColorImageFormat.Bgra);
-
-                            this.colorBitmap.AddDirtyRect(new Int32Rect(0, 0, this.colorBitmap.PixelWidth, this.colorBitmap.PixelHeight));
-                        }
-
-                        this.colorBitmap.Unlock();
                     }
+                }
+
+                if (takePic)
+                {
+                    SaveColorBitmap();
+                    takePic = false;
+                    takenPic?.Invoke();
+                }
+            }
+
+            void SaveColorBitmap()
+            {
+                string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                var configFolder = Path.Combine(commonAppData, "WyprostujSie");
+                var PicPath = Path.Combine(configFolder, "photo.jpg");
+
+                using (FileStream stream = new FileStream(PicPath, FileMode.Create))
+                {
+                    JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                    //PngBitmapEncoder encoder = new PngBitmapEncoder();
+
+                    encoder.Frames.Add(BitmapFrame.Create(colorBitmap));
+                    encoder.Save(stream);
                 }
             }
 
@@ -213,128 +242,70 @@ namespace Wyprostuj_sie.cs
             }
             if (dataReceived)
             {
-                using (DrawingContext dc = this.drawingGroup.Open())
+                if (draw)
                 {
-                    // Draw a transparent background to set the render size
-                    dc.DrawRectangle(Brushes.Black, null, new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
-
-                    int penIndex = 0;
-                    foreach (Body body in this.bodies)
+                    using (DrawingContext dc = this.drawingGroup.Open())
                     {
-                        Pen drawPen = this.bodyColors[penIndex++];
+                        // Draw a transparent background to set the render size
+                        dc.DrawRectangle(Brushes.Black, null, new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
 
-                        if (body.IsTracked)
+                        int penIndex = 0;
+                        foreach (Body body in this.bodies)
                         {
-                            this.DrawClippedEdges(body, dc);
+                            Pen drawPen = this.bodyColors[penIndex++];
 
-                            IReadOnlyDictionary<JointType, Joint> joints = body.Joints;
-
-                            // convert the joint points to depth (display) space
-                            Dictionary<JointType, Point> jointPoints = new Dictionary<JointType, Point>();
-
-                            foreach (JointType jointType in joints.Keys)
+                            if (body.IsTracked)
                             {
-                                // sometimes the depth(Z) of an inferred joint may show as negative
-                                // clamp down to 0.1f to prevent coordinatemapper from returning (-Infinity, -Infinity)
-                                CameraSpacePoint position = joints[jointType].Position;
-                                if (position.Z < 0)
+                                this.DrawClippedEdges(body, dc);
+
+                                IReadOnlyDictionary<JointType, Joint> joints = body.Joints;
+
+                                // convert the joint points to depth (display) space
+                                Dictionary<JointType, Point> jointPoints = new Dictionary<JointType, Point>();
+
+                                foreach (JointType jointType in joints.Keys)
                                 {
-                                    position.Z = InferredZPositionClamp;
+                                    // sometimes the depth(Z) of an inferred joint may show as negative
+                                    // clamp down to 0.1f to prevent coordinatemapper from returning (-Infinity, -Infinity)
+                                    CameraSpacePoint position = joints[jointType].Position;
+                                    if (position.Z < 0)
+                                    {
+                                        position.Z = InferredZPositionClamp;
+                                    }
+
+                                    DepthSpacePoint depthSpacePoint = this.coordinateMapper.MapCameraPointToDepthSpace(position);
+                                    jointPoints[jointType] = new Point(depthSpacePoint.X, depthSpacePoint.Y);
                                 }
-
-                                DepthSpacePoint depthSpacePoint = this.coordinateMapper.MapCameraPointToDepthSpace(position);
-                                jointPoints[jointType] = new Point(depthSpacePoint.X, depthSpacePoint.Y);
+                                this.DrawBody(joints, jointPoints, dc, drawPen);
                             }
-                            this.DrawBody(joints, jointPoints, dc, drawPen);
                         }
-                    }
 
-                    int trB = bodies.Where(b => b.IsTracked).Count();
-                    if (trB == 1)
+                        // prevent drawing outside of our render area
+                        this.drawingGroup.ClipGeometry = new RectangleGeometry(new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
+                    }
+                }
+
+                int trB = bodies.Where(b => b.IsTracked).Count();
+                if (trB == 1)
+                {
+                    Body b = bodies.Where(bc => bc.IsTracked).First();
                     {
-                        Body b = bodies.Where(bc => bc.IsTracked).First(); 
-                        {
-                            Angles(ref b);
-                        }
+                        Angles(ref b);
                     }
-
-                    // prevent drawing outside of our render area
-                    this.drawingGroup.ClipGeometry = new RectangleGeometry(new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
                 }
             }
 
             newData?.Invoke();
         }
 
-        public void Reader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
+        private void TakePhoto()
         {
-            bool dataReceived = false;
-
-            using (BodyFrame bodyFrame = e.FrameReference.AcquireFrame())
-            {
-                if (bodyFrame != null)
-                {
-                    if (this.bodies == null)
-                    {
-                        this.bodies = new Body[bodyFrame.BodyCount];
-                    }
-
-                    // The first time GetAndRefreshBodyData is called, Kinect will allocate each Body in the array.
-                    // As long as those body objects are not disposed and not set to null in the array,
-                    // those body objects will be re-used.
-                    bodyFrame.GetAndRefreshBodyData(this.bodies);
-                    dataReceived = true;
-                }
-            }
-
-            if (dataReceived)
-            {
-                using (DrawingContext dc = this.drawingGroup.Open())
-                {
-                    // Draw a transparent background to set the render size
-                    dc.DrawRectangle(Brushes.Black, null, new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
-
-                    int penIndex = 0;
-                    foreach (Body body in this.bodies)
-                    {
-                        Pen drawPen = this.bodyColors[penIndex++];
-
-                        if (body.IsTracked)
-                        {
-                            this.DrawClippedEdges(body, dc);
-
-                            IReadOnlyDictionary<JointType, Joint> joints = body.Joints;
-
-                            // convert the joint points to depth (display) space
-                            Dictionary<JointType, Point> jointPoints = new Dictionary<JointType, Point>();
-
-                            foreach (JointType jointType in joints.Keys)
-                            {
-                                // sometimes the depth(Z) of an inferred joint may show as negative
-                                // clamp down to 0.1f to prevent coordinatemapper from returning (-Infinity, -Infinity)
-                                CameraSpacePoint position = joints[jointType].Position;
-                                if (position.Z < 0)
-                                {
-                                    position.Z = InferredZPositionClamp;
-                                }
-
-                                DepthSpacePoint depthSpacePoint = this.coordinateMapper.MapCameraPointToDepthSpace(position);
-                                jointPoints[jointType] = new Point(depthSpacePoint.X, depthSpacePoint.Y);
-                            }
-
-                            this.DrawBody(joints, jointPoints, dc, drawPen);
-
-                        }
-                    }
-
-                    // prevent drawing outside of our render area
-                    this.drawingGroup.ClipGeometry = new RectangleGeometry(new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
-                }
-            }
+            //TODO
         }
 
-        public Kinect()
+        public Kinect(bool draw)
         {
+            this.draw = draw;
             this.kinectSensor = KinectSensor.GetDefault();
             this.coordinateMapper = this.kinectSensor.CoordinateMapper;
 

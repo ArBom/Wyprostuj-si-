@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,9 +10,9 @@ using System.Windows.Media.Imaging;
 
 using Microsoft.Kinect;
 
-namespace Wyprostuj_sie.cs
+namespace Wyprostuj_sie
 {
-    class Kinect //TODO draw variable
+    class Kinect
     {
         private KinectSensor kinectSensor = null;
         private CoordinateMapper coordinateMapper = null;
@@ -200,11 +201,28 @@ namespace Wyprostuj_sie.cs
                         }
                     }
                 }
+
                 if (takePic)
                 {
-                    //Zapis wykonanego zdjęcia gdzieś
-                    takenPic?.Invoke();
+                    SaveColorBitmap();
                     takePic = false;
+                    takenPic?.Invoke();
+                }
+            }
+
+            void SaveColorBitmap()
+            {
+                string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                var configFolder = Path.Combine(commonAppData, "WyprostujSie");
+                var PicPath = Path.Combine(configFolder, "photo.jpg");
+
+                using (FileStream stream = new FileStream(PicPath, FileMode.Create))
+                {
+                    JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                    //PngBitmapEncoder encoder = new PngBitmapEncoder();
+
+                    encoder.Frames.Add(BitmapFrame.Create(colorBitmap));
+                    encoder.Save(stream);
                 }
             }
 

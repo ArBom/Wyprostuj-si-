@@ -6,8 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Newtonsoft.Json;
+using System.IO;
 
-namespace Wyprostuj_sie.cs
+namespace Wyprostuj_sie
 {
     class Data
     {
@@ -32,23 +33,25 @@ namespace Wyprostuj_sie.cs
         [JsonProperty(PropertyName = NeckAnKey)]
         public double NeckAnD = 0;
 
-        const string file = "wyprostujsie.json";
+        readonly string configFolder;
+        const string fileName = "wyprostujsie.json";
 
-        private bool DataReadOk()
+        private bool DataReadOk() //TODO
         {
-            return false;
+            if (File.Exists(Path.Combine(configFolder, fileName)))
+                return true;
+            else return false;
         }
 
         public void Save()
-        { //TODO + utworzenie pliku jeśli nie istnieje
+        {
             string serialize = this.ToString();
-            var commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-            //var configFolder = Path.Compbine(commonAppData, "MyAppFolder");
+            File.WriteAllText(Path.Combine(configFolder, fileName), serialize);            
         }
 
         private void ReadData()
         {
-            string dataStringJson = ""; //TODO
+            string dataStringJson = File.ReadAllText(Path.Combine(configFolder, fileName));
             Data temp = JsonConvert.DeserializeObject<Data>(dataStringJson);
 
             this.BokAnB = temp.BokAnB;
@@ -64,10 +67,20 @@ namespace Wyprostuj_sie.cs
             return JsonConvert.SerializeObject(this);
         }
 
-        public Data()
+        public Data(bool read)
         {
-            if (DataReadOk())
-                ReadData();            
+
+            string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            configFolder = Path.Combine(commonAppData, "WyprostujSie");
+
+            if (!Directory.Exists(configFolder))
+                Directory.CreateDirectory(configFolder);
+
+            if (read)
+            {
+                if (DataReadOk())
+                    ReadData();
+            }
         }
     }
 }

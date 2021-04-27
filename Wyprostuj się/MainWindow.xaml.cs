@@ -13,9 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using Microsoft.Win32;
-using Wyprostuj_sie.cs;
-
 namespace Wyprostuj_sie
 {
     /// <summary>
@@ -29,7 +26,7 @@ namespace Wyprostuj_sie
         public MainWindow()
         {
             kinect = new Kinect(true);
-            data = new Data();
+            data = new Data(true);
             
             InitializeComponent();
             setValuaes();
@@ -82,6 +79,7 @@ namespace Wyprostuj_sie
             /*RegistryKey regKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             System.Reflection.Assembly curAssembly = System.Reflection.Assembly.GetExecutingAssembly();
             regKey.SetValue(curAssembly.GetName().Name, curAssembly.Location);*/
+            kinect.takePic = true;
         }
 
         private void SpineChB_Click(object sender, RoutedEventArgs e)
