@@ -22,11 +22,13 @@ namespace Wyprostuj_sie
     {
         Kinect kinect;
         Data data;
+        KalmanFilter[] kalmanFilters;
 
         public MainWindow()
         {
             kinect = new Kinect(true);
             data = new Data(true);
+            kalmanFilters = new KalmanFilter[3];
             
             InitializeComponent();
             setValuaes();
@@ -37,12 +39,15 @@ namespace Wyprostuj_sie
         {
             this.spineChB.IsChecked = data.SpineAnB;
             this.spineSlider.Value = data.SpineAnD;
+            this.kalmanFilters[0] = new KalmanFilter(1, 1, 0.18, 1, 0.095, data.SpineAnD);
 
             this.headChB.IsChecked = data.NeckAnB;
             this.headSlider.Value = data.NeckAnD;
+            this.kalmanFilters[1] = new KalmanFilter(1, 1, 0.175, 1, 0.09, data.NeckAnD);
 
             this.bokChB.IsChecked = data.BokAnB;
             this.bokSlider.Value = data.BokAnD;
+            this.kalmanFilters[2] = new KalmanFilter(1, 1, 0.175, 1, 0.09, data.BokAnD);
         }
 
         public ImageSource ImageSource
@@ -58,9 +63,9 @@ namespace Wyprostuj_sie
             this.kinColour.Source = kinect.colorBitmap;
             this.kinSpindlelegs.Source = kinect.ImageSource;
 
-            SpineLabel.Content = kinect.SpineAn;
-            headLabel.Content = kinect.NeckAn;
-            bokLabel.Content = kinect.BokAn;
+            SpineLabel.Content = kalmanFilters[0].Output(kinect.SpineAn);
+            headLabel.Content = kalmanFilters[1].Output(kinect.NeckAn);
+            bokLabel.Content = kalmanFilters[2].Output(kinect.BokAn);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

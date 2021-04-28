@@ -70,6 +70,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="cs\Data.cs" />
+    <Compile Include="cs\KalmanFilter.cs" />
     <Compile Include="cs\Kinect.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
