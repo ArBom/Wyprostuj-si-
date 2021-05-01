@@ -33,8 +33,9 @@ namespace Wyprostuj_sie
         public ColorFrameReader colorFrameReader;
         public WriteableBitmap colorBitmap = null;
 
+        public delegate void TakenPic(Uri uri);
         public Action newData = null;
-        public Action takenPic = null;
+        public TakenPic takenPic = null;
 
         public double SpineAn { get; private set; } = 0;
         public double BokAn { get; private set; } = 0;
@@ -204,13 +205,15 @@ namespace Wyprostuj_sie
 
                 if (takePic)
                 {
-                    SaveColorBitmap();
+                    string Path = SaveColorBitmap();
                     takePic = false;
-                    takenPic?.Invoke();
+                    //string uriString = ; 
+                    Uri uriOfPic = new Uri(Path, UriKind.Absolute);
+                    takenPic?.Invoke(uriOfPic);
                 }
             }
 
-            void SaveColorBitmap()
+            string SaveColorBitmap()
             {
                 string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 var configFolder = Path.Combine(commonAppData, "WyprostujSie");
@@ -224,6 +227,8 @@ namespace Wyprostuj_sie
                     encoder.Frames.Add(BitmapFrame.Create(colorBitmap));
                     encoder.Save(stream);
                 }
+
+                return PicPath;
             }
 
             bool dataReceived = false;

@@ -12,6 +12,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
+
+using Windows.UI.Notifications; //TODO upewnić się że zbędne i usunąć
+using Microsoft.Toolkit.Uwp.Notifications;
+
 
 namespace Wyprostuj_sie
 {
@@ -50,14 +55,6 @@ namespace Wyprostuj_sie
             this.kalmanFilters[2] = new KalmanFilter(1, 1, 0.175, 1, 0.09, data.BokAnD);
         }
 
-        public ImageSource ImageSource
-        {
-            get
-            {
-                return kinect.colorBitmap;
-            }
-        }
-
         private void UpdateScreen()
         {
             this.kinColour.Source = kinect.colorBitmap;
@@ -68,9 +65,21 @@ namespace Wyprostuj_sie
             bokLabel.Content = kalmanFilters[2].Output(kinect.BokAn);
         }
 
+        private void ShowNot(Uri uriOfPic)
+        {
+            new ToastContentBuilder()
+                .SetToastScenario(ToastScenario.Default)
+                .AddArgument("eventId", 1983)
+                .AddText("Wyprostuj się")
+                .AddText("Tak będzie wyglądać przykładowe powiadomienie")
+                .AddInlineImage(uriOfPic)
+                .Show();
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             kinect.newData += UpdateScreen;
+            kinect.takenPic += ShowNot;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
