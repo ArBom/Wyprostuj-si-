@@ -38,6 +38,7 @@ namespace Wyprostuj_sie
             InitializeComponent();
             setValuaes();
 
+
         }
 
         private void setValuaes()

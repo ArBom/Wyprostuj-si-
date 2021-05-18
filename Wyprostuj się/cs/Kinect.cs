@@ -98,12 +98,11 @@ namespace Wyprostuj_sie
             drawingContext.DrawLine(drawPen, jointPoints[jointType0], jointPoints[jointType1]);
         }
 
-
         private void DrawBody(IReadOnlyDictionary<JointType, Joint> joints, IDictionary<JointType, Point> jointPoints, DrawingContext drawingContext, Pen drawingPen)
         {
             // Draw the bones
             foreach (var bone in this.bones)
-            {
+            {             
                 this.DrawBone(joints, jointPoints, bone.Item1, bone.Item2, drawingContext, drawingPen);
             }
 
@@ -207,7 +206,6 @@ namespace Wyprostuj_sie
                 {
                     string Path = SaveColorBitmap();
                     takePic = false;
-                    //string uriString = ; 
                     Uri uriOfPic = new Uri(Path, UriKind.Absolute);
                     takenPic?.Invoke(uriOfPic);
                 }
@@ -301,11 +299,6 @@ namespace Wyprostuj_sie
             }
 
             newData?.Invoke();
-        }
-
-        private void TakePhoto()
-        {
-            //TODO
         }
 
         public Kinect(bool draw)

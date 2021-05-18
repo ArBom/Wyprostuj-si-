@@ -1,6 +1,6 @@
 ﻿namespace WyprostujSieBackground
 {
-    partial class Service1
+    partial class Wyprostuj_sie
     {
         /// <summary> 
         /// Wymagana zmienna projektanta.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            this.ServiceName = "Service1";
+            this.ServiceName = "Wyprostuj_sie";
         }
 
         #endregion

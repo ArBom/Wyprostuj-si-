@@ -1,7 +1,7 @@
-﻿<Application x:Class="Wyprostuj_się.App"
+﻿<Application x:Class="Wyprostuj_sie.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Wyprostuj_się"
+             xmlns:local="clr-namespace:Wyprostuj_sie"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

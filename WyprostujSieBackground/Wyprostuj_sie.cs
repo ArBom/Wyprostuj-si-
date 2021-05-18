@@ -12,12 +12,12 @@ using Notification.Wpf;
 
 namespace WyprostujSieBackground
 {
-    public partial class Service1 : ServiceBase
+    public partial class Wyprostuj_sie : ServiceBase
     {
         Kinect kinect;
         Data data;
 
-        public Service1()
+        public Wyprostuj_sie()
         {
             kinect = new Kinect(false);
             data = new Data(true);
@@ -27,12 +27,12 @@ namespace WyprostujSieBackground
 
         protected override void OnStart(string[] args)
         {
-            
+            System.IO.File.Create(AppDomain.CurrentDomain.BaseDirectory + "OnStart.txt");
         }
 
         protected override void OnStop()
         {
-
+            System.IO.File.Create(AppDomain.CurrentDomain.BaseDirectory + "OnStop.txt");
         }
     }
 }
