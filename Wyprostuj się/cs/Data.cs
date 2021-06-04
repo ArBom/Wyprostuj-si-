@@ -33,6 +33,13 @@ namespace Wyprostuj_sie
         [JsonProperty(PropertyName = NeckAnKey)]
         public double NeckAnD = 0;
 
+        const string NoPersBKey = "NoPersB";
+        [JsonProperty(PropertyName = NoPersBKey)]
+        public bool NoPersB = true;
+        const string TMPersBKey = "TMPersB";
+        [JsonProperty(PropertyName = TMPersBKey)]
+        public bool TMPersB = true;
+
         readonly string configFolder;
         const string fileName = "wyprostujsie.json";
 
@@ -60,6 +67,8 @@ namespace Wyprostuj_sie
             this.NeckAnD = temp.NeckAnD;
             this.SpineAnB = temp.SpineAnB;
             this.SpineAnD = temp.SpineAnD;
+            this.NoPersB = temp.NoPersB;
+            this.TMPersB = temp.TMPersB;
         }
 
         public override string ToString()

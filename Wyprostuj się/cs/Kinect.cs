@@ -33,9 +33,13 @@ namespace Wyprostuj_sie
         public ColorFrameReader colorFrameReader;
         public WriteableBitmap colorBitmap = null;
 
+        public delegate void PersonAtPhoto(int howMany);
         public delegate void TakenPic(Uri uri);
         public Action newData = null;
         public TakenPic takenPic = null;
+        public PersonAtPhoto personAtPhoto = null;
+
+        private int PersonAtLastPhoto = 0;
 
         public double SpineAn { get; private set; } = 0;
         public double BokAn { get; private set; } = 0;
@@ -289,6 +293,11 @@ namespace Wyprostuj_sie
                 }
 
                 int trB = bodies.Where(b => b.IsTracked).Count();
+
+                if (PersonAtLastPhoto != trB)
+                    personAtPhoto?.Invoke(trB);
+                PersonAtLastPhoto = trB;
+
                 if (trB == 1)
                 {
                     Body b = bodies.Where(bc => bc.IsTracked).First();

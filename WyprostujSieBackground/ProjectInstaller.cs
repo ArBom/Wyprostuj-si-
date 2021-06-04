@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration.Install;
 using System.Linq;
+using System.ServiceProcess;
 using System.Threading.Tasks;
 
 namespace WyprostujSieBackground
@@ -18,7 +19,7 @@ namespace WyprostujSieBackground
 
         private void serviceInstaller1_AfterInstall(object sender, InstallEventArgs e)
         {
-
+            new ServiceController(serviceInstaller.ServiceName).Start();
         }
 
         private void serviceProcessInstaller1_AfterInstall(object sender, InstallEventArgs e)

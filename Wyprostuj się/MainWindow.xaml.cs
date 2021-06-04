@@ -54,6 +54,9 @@ namespace Wyprostuj_sie
             this.bokChB.IsChecked = data.BokAnB;
             this.bokSlider.Value = data.BokAnD;
             this.kalmanFilters[2] = new KalmanFilter(1, 1, 0.175, 1, 0.09, data.BokAnD);
+
+            this.noPersonChB.IsChecked = data.NoPersB;
+            this.toManyPersonChB.IsChecked = data.TMPersB;
         }
 
         private void UpdateScreen()
@@ -136,6 +139,18 @@ namespace Wyprostuj_sie
             data.NeckAnD = headSlider.Value;
             data.SpineAnD = spineSlider.Value;
 
+            data.Save();
+        }
+
+        private void noPersonChB_Click(object sender, RoutedEventArgs e)
+        {
+            data.NoPersB = (sender as CheckBox).IsChecked.Value;
+            data.Save();
+        }
+
+        private void toManyPersonChB_Click(object sender, RoutedEventArgs e)
+        {
+            data.TMPersB = (sender as CheckBox).IsChecked.Value;
             data.Save();
         }
     }
