@@ -20,7 +20,8 @@
                 <RowDefinition Height="75"/>
                 <RowDefinition Height="75"/>
                 <RowDefinition Height="90"/>
-                <RowDefinition />
+                <RowDefinition Height="20*" />
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0"
@@ -44,9 +45,9 @@
                        Grid.Row="2"
                        />
             </Grid>
-            <Grid Grid.Row="1"
+            <Grid
                   VerticalAlignment="Top"
-                  Height="55">
+                  Height="55" Margin="0,75,0,0" Grid.RowSpan="2">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -65,14 +66,14 @@
                        Grid.Row="2"
                        />
             </Grid>
-            <Grid Grid.Row="2"
+            <Grid Grid.Row="1"
                   VerticalAlignment="Top"
-                  Height="55">
+                  Height="55" Margin="0,74.8,0,0" Grid.RowSpan="2">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
-             
+
                 </Grid.RowDefinitions>
                 <CheckBox x:Name="bokChB"
                           Grid.Row="0"
@@ -89,7 +90,7 @@
             </Grid>
             <Grid Grid.Row="3"
                   VerticalAlignment="Top"
-                  Height="55">
+                  Height="55" Margin="0,0.4,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -105,11 +106,12 @@
             </Grid>
 
             <Button Click="Button_Click" 
-                    Grid.Row="4"
+                    Grid.Row="3"
                     AutomationProperties.IsRequiredForForm="True" 
                     MaxHeight="50" 
-                    MaxWidth="100"/>
-            <Label x:Name="Status" Grid.Row="1"/>
+                    MaxWidth="100" Margin="0,89.4,0,-0.4" Grid.RowSpan="4"/>
+            
+            <Label x:Name="Status" Margin="5,5,5,5" Grid.RowSpan="5"/>
         </Grid>
         <Grid Grid.Column="1" Margin="5">
             <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" >

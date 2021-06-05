@@ -59,14 +59,14 @@ namespace Wyprostuj_sie
             this.toManyPersonChB.IsChecked = data.TMPersB;
         }
 
-        private void UpdateScreen()
+        private async void UpdateScreen()
         {
-            this.kinColour.Source = kinect.colorBitmap;
-            this.kinSpindlelegs.Source = kinect.ImageSource;
+                this.kinColour.Source = kinect.colorBitmap;
+                this.kinSpindlelegs.Source = kinect.ImageSource;
 
-            SpineLabel.Content = kalmanFilters[0].Output(kinect.SpineAn);
-            headLabel.Content = kalmanFilters[1].Output(kinect.NeckAn);
-            bokLabel.Content = kalmanFilters[2].Output(kinect.BokAn);
+                SpineLabel.Content = kalmanFilters[0].Output(kinect.SpineAn);
+                headLabel.Content = kalmanFilters[1].Output(kinect.NeckAn);
+                bokLabel.Content = kalmanFilters[2].Output(kinect.BokAn);
         }
 
         private void ShowNot(Uri uriOfPic)
@@ -84,6 +84,7 @@ namespace Wyprostuj_sie
         {
             kinect.newData += UpdateScreen;
             kinect.takenPic += ShowNot;
+            Status.Content = kinect.StatusText;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

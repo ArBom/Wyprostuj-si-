@@ -60,8 +60,8 @@ namespace Wyprostuj_sie
         private void Sensor_IsAvailableChanged(object sender, IsAvailableChangedEventArgs e) //TODO
         {
             // on failure, set the status text
-            this.StatusText = this.kinectSensor.IsAvailable ? "Properties.Resources.RunningStatusText"
-                                                            : "Properties.Resources.SensorNotAvailableStatusText";
+            this.StatusText = this.kinectSensor.IsAvailable ? "RunningStatusText"
+                                                            : "SensorNotAvailableStatusText";
         }
 
         private void Angles (ref Body body)
@@ -88,6 +88,11 @@ namespace Wyprostuj_sie
             // If we can't find either of these joints, exit
             if (joint0.TrackingState == TrackingState.NotTracked ||
                 joint1.TrackingState == TrackingState.NotTracked)
+            {
+                return;
+            }
+
+            if((int)joint0.JointType >= 4 && (int)joint1.JointType >= 4)
             {
                 return;
             }
@@ -382,8 +387,8 @@ namespace Wyprostuj_sie
             this.kinectSensor.Open();
 
             // set the status text
-            this.StatusText = this.kinectSensor.IsAvailable ? "Properties.Resources.RunningStatusText"
-                                                            : "Properties.Resources.NoSensorStatusText";
+            this.StatusText = this.kinectSensor.IsAvailable ? "Kinect podłączony"
+                                                            : "Nie znaleziono Kinect'a";
 
             // Create the drawing group we'll use for drawing
             this.drawingGroup = new DrawingGroup();
@@ -401,6 +406,7 @@ namespace Wyprostuj_sie
         {
             if (this.kinectSensor != null)
             {
+                this.kinectSensor.Close();
                 this.kinectSensor.Close();
                 this.kinectSensor = null;
             }
