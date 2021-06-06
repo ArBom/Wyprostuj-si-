@@ -407,7 +407,6 @@ namespace Wyprostuj_sie
             if (this.kinectSensor != null)
             {
                 this.kinectSensor.Close();
-                this.kinectSensor.Close();
                 this.kinectSensor = null;
             }
         }

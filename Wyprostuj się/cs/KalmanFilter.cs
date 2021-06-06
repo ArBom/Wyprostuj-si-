@@ -32,7 +32,7 @@ namespace Wyprostuj_sie
             x = x + K * (input - H * x);
             P = (1 - K * H) * P;
 
-            return x;
+            return Math.Round(x, 3);
         }
     }
 }
