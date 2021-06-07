@@ -50,10 +50,14 @@ namespace Wyprostuj_sie
             else return false;
         }
 
-        public void Save()
+        public async Task Save()
         {
             string serialize = this.ToString();
-            File.WriteAllText(Path.Combine(configFolder, fileName), serialize);            
+
+            using (var sw = new StreamWriter(Path.Combine(configFolder, fileName)))
+            {
+                await sw.WriteAsync(serialize);
+            }         
         }
 
         private void ReadData()

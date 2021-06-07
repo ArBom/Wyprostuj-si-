@@ -46,8 +46,7 @@ namespace Wyprostuj_sie
         private void setValuaes()
         {
             this.spineChB.IsChecked = data.SpineAnB;
-            if (data.SpineAnD >= spineSlider.Minimum && data.SpineAnD <= spineSlider.Maximum)
-                this.spineSlider.Value = data.SpineAnD;
+            this.spineSlider.Value = data.SpineAnD;
             this.kalmanFilters[0] = new KalmanFilter(1, 1, 0.18, 1, 0.095, data.SpineAnD);
 
             this.headChB.IsChecked = data.NeckAnB;
@@ -64,29 +63,59 @@ namespace Wyprostuj_sie
 
         private async void UpdateScreen()
         {
-            this.kinColour.Source = kinect.colorBitmap;
-            this.kinSpindlelegs.Source = kinect.ImageSource;
+                this.kinColour.Source = kinect.colorBitmap;
+                this.kinSpindlelegs.Source = kinect.ImageSource;
 
-            float SpineEst = (float)kalmanFilters[0].Output(kinect.SpineAn);
-            SpineLabel.Content = SpineEst;
-            if (Math.Abs(SpineEst - spineAv) > (float)spineSlider.Value/10)
-                SpineLabel.Foreground = Brushes.DarkRed;
-            else
-                SpineLabel.Foreground = Brushes.Green;
-            
-            float headEst = (float)kalmanFilters[1].Output(kinect.NeckAn);
-            headLabel.Content = headEst;
-            if (Math.Abs(headEst - headAv) > (float)headSlider.Value/10)
-                headLabel.Foreground = Brushes.DarkRed;
-            else
-                headLabel.Foreground = Brushes.Green;
+                float SpineEst = (float)kalmanFilters[0].Output(kinect.SpineAn);
+                SpineLabel.Content = SpineEst;
+                if (Math.Abs(SpineEst - spineAv) > (float)spineSlider.Value / 10)
+                    SpineLabel.Foreground = Brushes.DarkRed;
+                else
+                    SpineLabel.Foreground = Brushes.Green;
 
-            float flankEst = (float)kalmanFilters[2].Output(kinect.BokAn);
-            bokLabel.Content = flankEst;
-            if (Math.Abs(flankEst - flankAv) > (float)bokSlider.Value/10)
-                bokLabel.Foreground = Brushes.DarkRed;
-            else
-                bokLabel.Foreground = Brushes.Green;
+                float headEst = (float)kalmanFilters[1].Output(kinect.NeckAn);
+                headLabel.Content = headEst;
+                if (Math.Abs(headEst - headAv) > (float)headSlider.Value / 10)
+                    headLabel.Foreground = Brushes.DarkRed;
+                else
+                    headLabel.Foreground = Brushes.Green;
+
+                float flankEst = (float)kalmanFilters[2].Output(kinect.BokAn);
+                bokLabel.Content = flankEst;
+                if (Math.Abs(flankEst - flankAv) > (float)bokSlider.Value / 10)
+                    bokLabel.Foreground = Brushes.DarkRed;
+                else
+                    bokLabel.Foreground = Brushes.Green;
+        }
+
+        private void NumOfPeoleChanged (int howMamyPeolple)
+        {
+            if (howMamyPeolple == 0 && noPersonChB.IsChecked.Value)
+            {
+                new ToastContentBuilder()
+                    .SetToastScenario(ToastScenario.Default)
+                    .AddArgument("howManyP")
+                    .AddText("Wyprostuj się")
+                    .AddText("Nie widać cię")
+                    .Show(toast =>
+                    {
+                        toast.Tag = "howManyP";
+                        toast.Group = "WyprostujSieGrop";
+                    });
+            }
+            else if (howMamyPeolple > 1 && toManyPersonChB.IsChecked.Value)
+            {
+                new ToastContentBuilder()
+                    .SetToastScenario(ToastScenario.Default)
+                    .AddText("Wyprostuj się")
+                    .AddText("Więcej niż jedna osoba.")
+                    .Show(toast =>
+                    {
+                        toast.Tag = "howManyP";
+                        toast.Group = "WyprostujSieGrop";
+                        toast.SuppressPopup = true;
+                    });
+            }
         }
 
         private void ShowNot(Uri uriOfPic)
@@ -102,8 +131,13 @@ namespace Wyprostuj_sie
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            kinect.newData += UpdateScreen;
-            kinect.takenPic += ShowNot;
+            Task.Run(() =>
+            {
+                kinect.newData += UpdateScreen;
+                kinect.takenPic += ShowNot;
+                kinect.personAtPhoto += NumOfPeoleChanged;               
+            });
+
             Status.Content = kinect.StatusText;
         }
 

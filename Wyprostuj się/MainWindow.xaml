@@ -19,10 +19,8 @@
                 <RowDefinition Height="75"/>
                 <RowDefinition Height="75"/>
                 <RowDefinition Height="75"/>
-                <RowDefinition Height="90"/>
-                <RowDefinition Height="20*" />
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="100" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0"
                   VerticalAlignment="Top">
@@ -40,6 +38,7 @@
                         Grid.Row="1"
                         Minimum="0" 
                         Maximum="10"
+                        Value="{Binding Value}"
                         ValueChanged="Slider_Changed"
                           />
                 <Label x:Name="headLabel"
@@ -104,20 +103,21 @@
                 <CheckBox x:Name="noPersonChB"
                           Grid.Row="0"
                           Content="Informuj jeśli brak sylwetek"
-                          Checked="noPersonChB_Click"/>
+                          Click="noPersonChB_Click"/>
                 <CheckBox x:Name="toManyPersonChB"
                           Grid.Row="1"
                           Content="Informuj jeśli więcej niż 1 sylwetka"
-                          Checked="toManyPersonChB_Click"/>
+                          Click="toManyPersonChB_Click"/>
             </Grid>
 
             <Button Click="Button_Click" 
                     Grid.Row="3"
                     AutomationProperties.IsRequiredForForm="True" 
                     MaxHeight="50" 
-                    MaxWidth="100" Margin="0,89.4,0,-0.4" Grid.RowSpan="4"/>
+                    MaxWidth="100" 
+                    Margin="0,89.4,0,-0.4"/>
             
-            <Label x:Name="Status" Margin="5,5,5,5" Grid.RowSpan="5"/>
+            <Label x:Name="Status" Content="Status" Margin="5,5,5,5" Grid.Row="4"/>
         </Grid>
         <Grid Grid.Column="1" Margin="5">
             <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" >
