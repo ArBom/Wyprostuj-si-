@@ -39,8 +39,11 @@
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -68,6 +71,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="cs\Data.cs" />
+    <Compile Include="cs\Installer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="cs\KalmanFilter.cs" />
     <Compile Include="cs\Kinect.cs" />
     <Compile Include="MainWindow.xaml.cs">

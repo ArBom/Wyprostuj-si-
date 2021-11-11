@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
 
-using Windows.UI.Notifications; //TODO upewnić się że zbędne i usunąć
+using System.ServiceProcess;
 using Microsoft.Toolkit.Uwp.Notifications;
 
 
@@ -38,7 +38,7 @@ namespace Wyprostuj_sie
             kinect = new Kinect(true);
             data = new Data(true);
             kalmanFilters = new KalmanFilter[3];
-            
+
             InitializeComponent();
             setValuaes();
         }
@@ -63,32 +63,32 @@ namespace Wyprostuj_sie
 
         private async void UpdateScreen()
         {
-                this.kinColour.Source = kinect.colorBitmap;
-                this.kinSpindlelegs.Source = kinect.ImageSource;
+            this.kinColour.Source = kinect.colorBitmap;
+            this.kinSpindlelegs.Source = kinect.ImageSource;
 
-                float SpineEst = (float)kalmanFilters[0].Output(kinect.SpineAn);
-                SpineLabel.Content = SpineEst;
-                if (Math.Abs(SpineEst - spineAv) > (float)spineSlider.Value / 10)
-                    SpineLabel.Foreground = Brushes.DarkRed;
-                else
-                    SpineLabel.Foreground = Brushes.Green;
+            float SpineEst = (float)kalmanFilters[0].Output(kinect.SpineAn);
+            SpineLabel.Content = SpineEst;
+            if (Math.Abs(SpineEst - spineAv) > (float)spineSlider.Value / 10)
+                SpineLabel.Foreground = Brushes.DarkRed;
+            else
+                SpineLabel.Foreground = Brushes.Green;
 
-                float headEst = (float)kalmanFilters[1].Output(kinect.NeckAn);
-                headLabel.Content = headEst;
-                if (Math.Abs(headEst - headAv) > (float)headSlider.Value / 10)
-                    headLabel.Foreground = Brushes.DarkRed;
-                else
-                    headLabel.Foreground = Brushes.Green;
+            float headEst = (float)kalmanFilters[1].Output(kinect.NeckAn);
+            headLabel.Content = headEst;
+            if (Math.Abs(headEst - headAv) > (float)headSlider.Value / 10)
+                headLabel.Foreground = Brushes.DarkRed;
+            else
+                headLabel.Foreground = Brushes.Green;
 
-                float flankEst = (float)kalmanFilters[2].Output(kinect.BokAn);
-                bokLabel.Content = flankEst;
-                if (Math.Abs(flankEst - flankAv) > (float)bokSlider.Value / 10)
-                    bokLabel.Foreground = Brushes.DarkRed;
-                else
-                    bokLabel.Foreground = Brushes.Green;
+            float flankEst = (float)kalmanFilters[2].Output(kinect.BokAn);
+            bokLabel.Content = flankEst;
+            if (Math.Abs(flankEst - flankAv) > (float)bokSlider.Value / 10)
+                bokLabel.Foreground = Brushes.DarkRed;
+            else
+                bokLabel.Foreground = Brushes.Green;
         }
 
-        private void NumOfPeoleChanged (int howMamyPeolple)
+        private void NumOfPeoleChanged(int howMamyPeolple)
         {
             if (howMamyPeolple == 0 && noPersonChB.IsChecked.Value)
             {
@@ -135,7 +135,7 @@ namespace Wyprostuj_sie
             {
                 kinect.newData += UpdateScreen;
                 kinect.takenPic += ShowNot;
-                kinect.personAtPhoto += NumOfPeoleChanged;               
+                kinect.personAtPhoto += NumOfPeoleChanged;
             });
 
             Status.Content = kinect.StatusText;
@@ -188,7 +188,7 @@ namespace Wyprostuj_sie
             data.Save();
         }
 
-        private void Slider_Changed (object sender, RoutedEventArgs e)
+        private void Slider_Changed(object sender, RoutedEventArgs e)
         {
             data.BokAnD = bokSlider.Value;
             data.NeckAnD = headSlider.Value;
@@ -207,6 +207,26 @@ namespace Wyprostuj_sie
         {
             data.TMPersB = (sender as CheckBox).IsChecked.Value;
             data.Save();
+        }
+
+        private void AutorunChB_Click(object sender, RoutedEventArgs e)
+        {
+            autorunChB.IsEnabled = false;
+
+            MyProjectInstaller myProjectInstaller;
+            //MyProjectInstaller MPI = new MyProjectInstaller(true);
+
+            //ServiceInstaller serviceInstaller;
+            if (autorunChB.IsChecked.Value)
+            {
+                myProjectInstaller = new MyProjectInstaller("install");
+            }
+            else
+            {
+                myProjectInstaller = new MyProjectInstaller("uninstall");
+            }
+
+            autorunChB.IsEnabled = true;
         }
     }
 }

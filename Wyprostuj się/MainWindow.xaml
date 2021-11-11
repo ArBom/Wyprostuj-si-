@@ -16,13 +16,19 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="75"/>
-                <RowDefinition Height="75"/>
-                <RowDefinition Height="75"/>
+                <RowDefinition Height="21"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
                 <RowDefinition Height="150"/>
                 <RowDefinition Height="100" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0"
+            <CheckBox x:Name="autorunChB"
+                      Grid.Row="0"
+                      Content="Uruchamiaj z systeem"
+                      Click="AutorunChB_Click"
+                      />
+            <Grid Grid.Row="1"
                   VerticalAlignment="Top">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20"/>
@@ -48,7 +54,7 @@
             </Grid>
             <Grid
                   VerticalAlignment="Top"
-                  Grid.Row="1">
+                  Grid.Row="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20"/>
                     <RowDefinition Height="20"/>
@@ -70,7 +76,7 @@
                        VerticalAlignment="Top"
                        />
             </Grid>
-            <Grid Grid.Row="2"
+            <Grid Grid.Row="3"
                   VerticalAlignment="Top">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20"/>
@@ -93,9 +99,9 @@
                        VerticalAlignment="Top"
                        />
             </Grid>
-            <Grid Grid.Row="3"
+            <Grid Grid.Row="4"
                   VerticalAlignment="Top"
-                  Height="55" Margin="0,0.4,0,0">
+                  Height="40" Margin="0,0.4,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -111,13 +117,13 @@
             </Grid>
 
             <Button Click="Button_Click" 
-                    Grid.Row="3"
+                    Grid.Row="4"
                     AutomationProperties.IsRequiredForForm="True" 
                     MaxHeight="50" 
                     MaxWidth="100" 
                     Margin="0,89.4,0,-0.4"/>
             
-            <Label x:Name="Status" Content="Status" Margin="5,5,5,5" Grid.Row="4"/>
+            <Label x:Name="Status" Content="Status" Margin="5,5,5,5" Grid.Row="5"/>
         </Grid>
         <Grid Grid.Column="1" Margin="5">
             <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" >
