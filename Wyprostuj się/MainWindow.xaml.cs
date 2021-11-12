@@ -16,7 +16,7 @@ using System.Xml;
 
 using System.ServiceProcess;
 using Microsoft.Toolkit.Uwp.Notifications;
-
+using System.Security.Principal;
 
 namespace Wyprostuj_sie
 {
@@ -32,6 +32,7 @@ namespace Wyprostuj_sie
         Kinect kinect;
         Data data;
         KalmanFilter[] kalmanFilters;
+        readonly bool IsAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
 
         public MainWindow()
         {
@@ -40,6 +41,8 @@ namespace Wyprostuj_sie
             kalmanFilters = new KalmanFilter[3];
 
             InitializeComponent();
+            this.autorunChB.IsChecked = MyProjectInstaller.installed();
+            this.autorunChB.IsEnabled = IsAdmin;
             setValuaes();
         }
 

@@ -3,11 +3,14 @@ using System.Collections;
 using System.Configuration.Install;
 using System.ServiceProcess;
 using System.ComponentModel;
+using System.IO;
+using System.Linq;
 
 [RunInstaller(true)]
 public class MyProjectInstaller : Installer
 {
     private ServiceInstaller serviceInstaller;
+    private const string ServiceName = "WyprostujSieBackground";
 
     public MyProjectInstaller(string args)
     {
@@ -15,21 +18,22 @@ public class MyProjectInstaller : Installer
         serviceInstaller = new ServiceInstaller();
         ServiceProcessInstaller ProcesServiceInstaller = new ServiceProcessInstaller();
 
-        InstallContext Context = new System.Configuration.Install.InstallContext();
-        
-        //String path = String.Format("/assemblypath={0}", @"..\..\..\WyprostujSieBackground\bin\Debug\WyprostujSieBackground.exe");
-        String path = String.Format("/assemblypath={0}", @"C:\Users\arkad\source\repos\ArBom\Wyprostuj-si-\WyprostujSieBackground\bin\Debug\WyprostujSieBackground.exe");
-        String[] cmdline = { path };
+        InstallContext Context = new InstallContext();
+
+        String RelatPath = @"..\..\..\WyprostujSieBackground\bin\Debug\WyprostujSieBackground.exe";
+        String AbsolPath = Path.GetFullPath(RelatPath);
+        AbsolPath = String.Format("/assemblypath={0}", AbsolPath);
+        String[] cmdline = { AbsolPath };
 
         serviceInstaller.Parent = ProcesServiceInstaller;
-        Context = new System.Configuration.Install.InstallContext("", cmdline);
+        Context = new InstallContext("", cmdline);
 
         serviceInstaller.Context = Context;
         // The services are started manually.
         serviceInstaller.StartType = ServiceStartMode.Automatic;
 
         // ServiceName must equal those on ServiceBase derived classes.
-        serviceInstaller.ServiceName = "WyprostujSieBackground";
+        serviceInstaller.ServiceName = ServiceName;// "WyprostujSieBackground";
         serviceInstaller.DisplayName = "Wyprostuj się";
         serviceInstaller.Description = "Wykorzystuje sensor Kinect do analizowania postawy twojego ciała; informuje o jej wadach";
 
@@ -43,12 +47,14 @@ public class MyProjectInstaller : Installer
             case "install":
             {
                 serviceInstaller.Install(stateSaver);
-                serviceController.Start();
+                if (installed())
+                    serviceController.Start();
                 break;
             }
             case "uninstall":
             {
-                serviceController.Stop();
+                if (installed())
+                    serviceController.Stop();
                 serviceInstaller.Uninstall(null);
                 break;
             }
@@ -58,5 +64,10 @@ public class MyProjectInstaller : Installer
                 break;
             }
         }
+    }
+
+    public static bool installed()
+    {
+        return ServiceController.GetServices().Any(s => s.ServiceName == ServiceName); //.FirstOrDefault(s => s.ServiceName == ServiceName);
     }
 }
