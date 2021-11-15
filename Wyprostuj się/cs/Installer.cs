@@ -6,13 +6,15 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 
+public enum ExpectedState { Install, Uninstall, Stop, Start };
+
 [RunInstaller(true)]
 public class MyProjectInstaller : Installer
 {
     private ServiceInstaller serviceInstaller;
     private const string ServiceName = "WyprostujSieBackground";
 
-    public MyProjectInstaller(string args)
+    public MyProjectInstaller(ExpectedState expectedState)
     {
         // Instantiate installers for process and services.
         serviceInstaller = new ServiceInstaller();
@@ -29,45 +31,83 @@ public class MyProjectInstaller : Installer
         Context = new InstallContext("", cmdline);
 
         serviceInstaller.Context = Context;
-        // The services are started manually.
+
+        // The services are started automaticly.
         serviceInstaller.StartType = ServiceStartMode.Automatic;
 
-        // ServiceName must equal those on ServiceBase derived classes.
-        serviceInstaller.ServiceName = ServiceName;// "WyprostujSieBackground";
+        serviceInstaller.ServiceName = ServiceName;
+
+        // Info for users
         serviceInstaller.DisplayName = "Wyprostuj się";
         serviceInstaller.Description = "Wykorzystuje sensor Kinect do analizowania postawy twojego ciała; informuje o jej wadach";
 
         ServiceController serviceController = new ServiceController(serviceInstaller.ServiceName);
 
         System.Collections.Specialized.ListDictionary stateSaver = new System.Collections.Specialized.ListDictionary();
-        //args = "uninstall";
 
-        switch (args)
+        switch (expectedState)
         {
-            case "install":
-            {
-                serviceInstaller.Install(stateSaver);
-                if (installed())
-                    serviceController.Start();
-                break;
-            }
-            case "uninstall":
-            {
-                if (installed())
-                    serviceController.Stop();
-                serviceInstaller.Uninstall(null);
-                break;
-            }
-            case "reset":
-            {
-                serviceController.Refresh();
-                break;
-            }
+            case ExpectedState.Install:
+                {
+                    if (installed())
+                    {
+                        try
+                        {
+                            serviceInstaller.Install(null);
+                            serviceController.Start();
+                        }
+                        catch { }
+                    }
+                    break;
+                }
+            case ExpectedState.Uninstall:
+                {
+                    if (installed())
+                    {
+                        try
+                        {
+                            serviceController.Stop();
+                            serviceInstaller.Uninstall(null);
+                        }
+                        catch { }
+                    }
+                    break;
+                }
+            case ExpectedState.Stop:
+                {
+                    if (installed())
+                    {
+                        if (serviceController.Status == ServiceControllerStatus.Running || serviceController.Status == ServiceControllerStatus.StartPending)
+                        {
+                            try
+                            {
+                                serviceController.Stop();
+                            }
+                            catch { }
+                        }
+                    }
+                    break;
+                }
+            case ExpectedState.Start:
+                {
+                    if (installed())
+                    {
+                        if (serviceController.Status == ServiceControllerStatus.Stopped || serviceController.Status == ServiceControllerStatus.StopPending)
+                        {
+                            try
+                            {
+                                serviceController.Start();
+                            }
+                            catch { }
+                        }
+                    }
+                    break;
+                }
         }
     }
 
     public static bool installed()
     {
-        return ServiceController.GetServices().Any(s => s.ServiceName == ServiceName); //.FirstOrDefault(s => s.ServiceName == ServiceName);
+        return ServiceController.GetServices().Any(s => s.ServiceName == ServiceName);
     }
 }

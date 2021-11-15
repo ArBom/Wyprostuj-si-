@@ -8,6 +8,10 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
+#if DEBUG
+using System.Diagnostics;
+#endif
+
 using Microsoft.Kinect;
 
 namespace Wyprostuj_sie
@@ -406,7 +410,17 @@ namespace Wyprostuj_sie
         {
             if (this.kinectSensor != null)
             {
-                this.kinectSensor.Close();
+                try
+                {
+                    if (this.kinectSensor.IsOpen)
+                        this.kinectSensor.Close();
+                }
+                catch(Exception e)
+                {
+#if DEBUG
+                    Debug.WriteLine(e.ToString());
+#endif
+                }
                 this.kinectSensor = null;
             }
         }

@@ -17,7 +17,6 @@ using System.Xml;
 using System.ServiceProcess;
 using Microsoft.Toolkit.Uwp.Notifications;
 using System.Security.Principal;
-using System.Windows;
 using System.Windows.Threading;
 
 namespace Wyprostuj_sie
@@ -41,6 +40,8 @@ namespace Wyprostuj_sie
 
         public MainWindow()
         {
+            using (MyProjectInstaller mpi = new MyProjectInstaller(ExpectedState.Stop))
+
             kinect = new Kinect(true);
             data = new Data(true);
             kalmanFilters = new KalmanFilter[3];
@@ -192,13 +193,11 @@ namespace Wyprostuj_sie
         {
             kinect.newData -= UpdateScreen;
             kinect = null;
+            using (MyProjectInstaller mpi = new MyProjectInstaller(ExpectedState.Start));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            /*RegistryKey regKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            System.Reflection.Assembly curAssembly = System.Reflection.Assembly.GetExecutingAssembly();
-            regKey.SetValue(curAssembly.GetName().Name, curAssembly.Location);*/
             kinect.takePic = true;
         }
 
@@ -259,18 +258,17 @@ namespace Wyprostuj_sie
         private void AutorunChB_Click(object sender, RoutedEventArgs e)
         {
             autorunChB.IsEnabled = false;
+            UpdateLayout();
 
             MyProjectInstaller myProjectInstaller;
-            //MyProjectInstaller MPI = new MyProjectInstaller(true);
 
-            //ServiceInstaller serviceInstaller;
             if (autorunChB.IsChecked.Value)
             {
-                myProjectInstaller = new MyProjectInstaller("install");
+                myProjectInstaller = new MyProjectInstaller(ExpectedState.Install);
             }
             else
             {
-                myProjectInstaller = new MyProjectInstaller("uninstall");
+                myProjectInstaller = new MyProjectInstaller(ExpectedState.Uninstall);
             }
 
             autorunChB.IsEnabled = true;
