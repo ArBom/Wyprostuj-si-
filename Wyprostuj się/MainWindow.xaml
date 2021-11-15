@@ -25,7 +25,7 @@
             </Grid.RowDefinitions>
             <CheckBox x:Name="autorunChB"
                       Grid.Row="0"
-                      Content="Uruchamiaj z systeem"
+                      Content="Uruchamiaj z systemem"
                       Click="AutorunChB_Click"
                       />
             <Grid Grid.Row="1"
@@ -122,8 +122,6 @@
                     MaxHeight="50" 
                     MaxWidth="100" 
                     Margin="0,89.4,0,-0.4"/>
-            
-            <Label x:Name="Status" Content="Status" Margin="5,5,5,5" Grid.Row="5"/>
         </Grid>
         <Grid Grid.Column="1" Margin="5">
             <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" >
@@ -135,5 +133,6 @@
                 <Image x:Name="kinSpindlelegs" Source="{Binding SpindlelegsSource}" Stretch="UniformToFill" />
             </Viewbox>
         </Grid>
+        <Label x:Name="Status" Content="Status: OK" Margin="5,5,5,5" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" x:FieldModifier="public"/>
     </Grid>
 </Window>

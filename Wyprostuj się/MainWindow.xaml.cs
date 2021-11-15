@@ -17,6 +17,8 @@ using System.Xml;
 using System.ServiceProcess;
 using Microsoft.Toolkit.Uwp.Notifications;
 using System.Security.Principal;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace Wyprostuj_sie
 {
@@ -32,6 +34,9 @@ namespace Wyprostuj_sie
         Kinect kinect;
         Data data;
         KalmanFilter[] kalmanFilters;
+        Notifications notifications;
+        DispatcherTimer dispatcherTimer;
+
         readonly bool IsAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
 
         public MainWindow()
@@ -39,11 +44,30 @@ namespace Wyprostuj_sie
             kinect = new Kinect(true);
             data = new Data(true);
             kalmanFilters = new KalmanFilter[3];
+            notifications = new Notifications();
 
             InitializeComponent();
             this.autorunChB.IsChecked = MyProjectInstaller.installed();
             this.autorunChB.IsEnabled = IsAdmin;
+            if (!IsAdmin)
+            {
+                notifications.addNotif("Uruchom aplikację jako administrator, aby móc korzystać ze wszystkich funkcji.", Brushes.Yellow, "admin");
+            }
+
             setValuaes();
+
+            dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Interval = TimeSpan.FromSeconds(5);
+            dispatcherTimer.Tick += setStatus;
+            dispatcherTimer.Start();
+        }
+
+        public void setStatus(object sender, EventArgs e)
+        {
+            Tuple<string, Brush> newStatus = notifications.ChNoti();
+
+            Status.Content = newStatus.Item1;
+            Status.Background = newStatus.Item2;
         }
 
         private void setValuaes()
@@ -141,7 +165,27 @@ namespace Wyprostuj_sie
                 kinect.personAtPhoto += NumOfPeoleChanged;
             });
 
-            Status.Content = kinect.StatusText;
+            Brush backgroundColor;
+            String content;
+
+            switch (kinect.StatusText)
+            {
+                case "SensorNotAvailableStatusText":
+                    {
+                        backgroundColor = Brushes.Red;
+                        content = "Nie można połączyć się z sensorem Kinect.";
+                        break;
+                    }
+                default:
+                    {
+                        backgroundColor = Brushes.Transparent;
+                        content = "";
+                        Tag = "";
+                        break;
+                    }
+            }
+
+            notifications.addNotif(content, backgroundColor, "kinect");
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
