@@ -30,9 +30,9 @@ namespace WyprostujSie
         const float spineAv = 1.57f;
         const float flankAv = 1.57f;
 
-        Kinect kinect;
-        Data data;
-        KalmanFilter[] kalmanFilters;
+        WyprostujSieBackground.Kinect kinect;
+        WyprostujSieBackground.Data data;
+        WyprostujSieBackground.KalmanFilter[] kalmanFilters;
         Notifications notifications;
         DispatcherTimer dispatcherTimer;
 
@@ -42,9 +42,9 @@ namespace WyprostujSie
         {
             using (MyProjectInstaller mpi = new MyProjectInstaller(ExpectedState.Stop))
 
-            kinect = new Kinect(true);
-            data = new Data(true);
-            kalmanFilters = new KalmanFilter[3];
+            kinect = new WyprostujSieBackground.Kinect(true);
+            data = new WyprostujSieBackground.Data(true);
+            kalmanFilters = new WyprostujSieBackground.KalmanFilter[3];
             notifications = new Notifications();
 
             InitializeComponent();
@@ -75,15 +75,15 @@ namespace WyprostujSie
         {
             this.spineChB.IsChecked = data.SpineAnB;
             this.spineSlider.Value = data.SpineAnD;
-            this.kalmanFilters[0] = new KalmanFilter(1, 1, 0.18, 1, 0.095, data.SpineAnD);
+            this.kalmanFilters[0] = new WyprostujSieBackground.KalmanFilter(1, 1, 0.18, 1, 0.095, data.SpineAnD);
 
             this.headChB.IsChecked = data.NeckAnB;
             this.headSlider.Value = data.NeckAnD;
-            this.kalmanFilters[1] = new KalmanFilter(1, 1, 0.175, 1, 0.09, data.NeckAnD);
+            this.kalmanFilters[1] = new WyprostujSieBackground.KalmanFilter(1, 1, 0.175, 1, 0.09, data.NeckAnD);
 
             this.bokChB.IsChecked = data.BokAnB;
             this.bokSlider.Value = data.BokAnD;
-            this.kalmanFilters[2] = new KalmanFilter(1, 1, 0.175, 1, 0.09, data.BokAnD);
+            this.kalmanFilters[2] = new WyprostujSieBackground.KalmanFilter(1, 1, 0.175, 1, 0.09, data.BokAnD);
 
             this.noPersonChB.IsChecked = data.NoPersB;
             this.toManyPersonChB.IsChecked = data.TMPersB;

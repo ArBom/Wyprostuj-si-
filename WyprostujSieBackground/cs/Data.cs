@@ -10,7 +10,7 @@ using System.IO;
 
 namespace WyprostujSieBackground
 {
-    class Data
+    public class Data
     {
         const string SpineAnBKey = "SpineAnB";
         [JsonProperty(PropertyName = SpineAnBKey)]

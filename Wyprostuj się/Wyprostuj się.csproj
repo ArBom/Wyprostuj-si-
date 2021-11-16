@@ -70,12 +70,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="cs\Data.cs" />
     <Compile Include="cs\Installer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="cs\KalmanFilter.cs" />
-    <Compile Include="cs\Kinect.cs" />
     <Compile Include="cs\Notification.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
