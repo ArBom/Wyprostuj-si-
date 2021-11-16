@@ -33,6 +33,13 @@ namespace WyprostujSieBackground
         [JsonProperty(PropertyName = NeckAnKey)]
         public double NeckAnD = 0;
 
+        const string NoPersBKey = "NoPersB";
+        [JsonProperty(PropertyName = NoPersBKey)]
+        public bool NoPersB = true;
+        const string TMPersBKey = "TMPersB";
+        [JsonProperty(PropertyName = TMPersBKey)]
+        public bool TMPersB = true;
+
         readonly string configFolder;
         const string fileName = "wyprostujsie.json";
 
@@ -43,10 +50,14 @@ namespace WyprostujSieBackground
             else return false;
         }
 
-        public void Save()
+        public async Task Save()
         {
             string serialize = this.ToString();
-            File.WriteAllText(Path.Combine(configFolder, fileName), serialize);            
+
+            using (var sw = new StreamWriter(Path.Combine(configFolder, fileName)))
+            {
+                await sw.WriteAsync(serialize);
+            }         
         }
 
         private void ReadData()
@@ -60,6 +71,8 @@ namespace WyprostujSieBackground
             this.NeckAnD = temp.NeckAnD;
             this.SpineAnB = temp.SpineAnB;
             this.SpineAnD = temp.SpineAnD;
+            this.NoPersB = temp.NoPersB;
+            this.TMPersB = temp.TMPersB;
         }
 
         public override string ToString()

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
 
-namespace Wyprostuj_sie
+namespace WyprostujSie
 {
     class Data
     {

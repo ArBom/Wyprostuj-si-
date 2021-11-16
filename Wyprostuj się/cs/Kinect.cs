@@ -14,7 +14,7 @@ using System.Diagnostics;
 
 using Microsoft.Kinect;
 
-namespace Wyprostuj_sie
+namespace WyprostujSie
 {
     class Kinect
     {

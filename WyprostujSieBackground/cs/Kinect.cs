@@ -8,11 +8,15 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
+#if DEBUG
+using System.Diagnostics;
+#endif
+
 using Microsoft.Kinect;
 
 namespace WyprostujSieBackground
 {
-    class Kinect
+    public class Kinect
     {
         private KinectSensor kinectSensor = null;
         private CoordinateMapper coordinateMapper = null;
@@ -33,8 +37,13 @@ namespace WyprostujSieBackground
         public ColorFrameReader colorFrameReader;
         public WriteableBitmap colorBitmap = null;
 
+        public delegate void PersonAtPhoto(int howMany);
+        public delegate void TakenPic(Uri uri);
         public Action newData = null;
-        public Action takenPic = null;
+        public TakenPic takenPic = null;
+        public PersonAtPhoto personAtPhoto = null;
+
+        private int PersonAtLastPhoto = 0;
 
         public double SpineAn { get; private set; } = 0;
         public double BokAn { get; private set; } = 0;
@@ -55,8 +64,8 @@ namespace WyprostujSieBackground
         private void Sensor_IsAvailableChanged(object sender, IsAvailableChangedEventArgs e) //TODO
         {
             // on failure, set the status text
-            this.StatusText = this.kinectSensor.IsAvailable ? "Properties.Resources.RunningStatusText"
-                                                            : "Properties.Resources.SensorNotAvailableStatusText";
+            this.StatusText = this.kinectSensor.IsAvailable ? "RunningStatusText"
+                                                            : "SensorNotAvailableStatusText";
         }
 
         private void Angles (ref Body body)
@@ -87,6 +96,11 @@ namespace WyprostujSieBackground
                 return;
             }
 
+            if((int)joint0.JointType >= 4 && (int)joint1.JointType >= 4)
+            {
+                return;
+            }
+
             // We assume all drawn bones are inferred unless BOTH joints are tracked
             Pen drawPen = this.inferredBonePen;
             if ((joint0.TrackingState == TrackingState.Tracked) && (joint1.TrackingState == TrackingState.Tracked))
@@ -97,12 +111,11 @@ namespace WyprostujSieBackground
             drawingContext.DrawLine(drawPen, jointPoints[jointType0], jointPoints[jointType1]);
         }
 
-
         private void DrawBody(IReadOnlyDictionary<JointType, Joint> joints, IDictionary<JointType, Point> jointPoints, DrawingContext drawingContext, Pen drawingPen)
         {
             // Draw the bones
             foreach (var bone in this.bones)
-            {
+            {             
                 this.DrawBone(joints, jointPoints, bone.Item1, bone.Item2, drawingContext, drawingPen);
             }
 
@@ -204,13 +217,14 @@ namespace WyprostujSieBackground
 
                 if (takePic)
                 {
-                    SaveColorBitmap();
+                    string Path = SaveColorBitmap();
                     takePic = false;
-                    takenPic?.Invoke();
+                    Uri uriOfPic = new Uri(Path, UriKind.Absolute);
+                    takenPic?.Invoke(uriOfPic);
                 }
             }
 
-            void SaveColorBitmap()
+            string SaveColorBitmap()
             {
                 string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 var configFolder = Path.Combine(commonAppData, "WyprostujSie");
@@ -224,6 +238,8 @@ namespace WyprostujSieBackground
                     encoder.Frames.Add(BitmapFrame.Create(colorBitmap));
                     encoder.Save(stream);
                 }
+
+                return PicPath;
             }
 
             bool dataReceived = false;
@@ -286,6 +302,11 @@ namespace WyprostujSieBackground
                 }
 
                 int trB = bodies.Where(b => b.IsTracked).Count();
+
+                if (PersonAtLastPhoto != trB)
+                    personAtPhoto?.Invoke(trB);
+                PersonAtLastPhoto = trB;
+
                 if (trB == 1)
                 {
                     Body b = bodies.Where(bc => bc.IsTracked).First();
@@ -296,11 +317,6 @@ namespace WyprostujSieBackground
             }
 
             newData?.Invoke();
-        }
-
-        private void TakePhoto()
-        {
-            //TODO
         }
 
         public Kinect(bool draw)
@@ -375,8 +391,8 @@ namespace WyprostujSieBackground
             this.kinectSensor.Open();
 
             // set the status text
-            this.StatusText = this.kinectSensor.IsAvailable ? "Properties.Resources.RunningStatusText"
-                                                            : "Properties.Resources.NoSensorStatusText";
+            this.StatusText = this.kinectSensor.IsAvailable ? "Kinect podłączony"
+                                                            : "Nie znaleziono Kinect'a";
 
             // Create the drawing group we'll use for drawing
             this.drawingGroup = new DrawingGroup();
@@ -394,7 +410,17 @@ namespace WyprostujSieBackground
         {
             if (this.kinectSensor != null)
             {
-                this.kinectSensor.Close();
+                try
+                {
+                    if (this.kinectSensor.IsOpen)
+                        this.kinectSensor.Close();
+                }
+                catch(Exception e)
+                {
+#if DEBUG
+                    Debug.WriteLine(e.ToString());
+#endif
+                }
                 this.kinectSensor = null;
             }
         }

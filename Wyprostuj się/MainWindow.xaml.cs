@@ -19,7 +19,7 @@ using Microsoft.Toolkit.Uwp.Notifications;
 using System.Security.Principal;
 using System.Windows.Threading;
 
-namespace Wyprostuj_sie
+namespace WyprostujSie
 {
     /// <summary>
     /// Logika interakcji dla klasy MainWindow.xaml

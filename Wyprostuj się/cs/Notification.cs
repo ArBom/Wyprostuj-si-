@@ -8,7 +8,7 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows;
 
-namespace Wyprostuj_sie
+namespace WyprostujSie
 {
     class Notifications
     {

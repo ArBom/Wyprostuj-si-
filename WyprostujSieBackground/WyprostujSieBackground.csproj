@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="cs\Data.cs" />
+    <Compile Include="cs\KalmanFilter.cs" />
     <Compile Include="cs\Kinect.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
