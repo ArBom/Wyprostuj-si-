@@ -49,12 +49,11 @@ public class MyProjectInstaller : Installer
         {
             case ExpectedState.Install:
                 {
-                    if (installed())
+                    if (!installed())
                     {
                         try
                         {
                             serviceInstaller.Install(null);
-                            serviceController.Start();
                         }
                         catch { }
                     }
@@ -66,7 +65,10 @@ public class MyProjectInstaller : Installer
                     {
                         try
                         {
-                            serviceController.Stop();
+                            if (serviceController.Status == ServiceControllerStatus.Running || serviceController.Status == ServiceControllerStatus.StartPending)
+                            {
+                                serviceController.Stop();
+                            }
                             serviceInstaller.Uninstall(null);
                         }
                         catch { }
