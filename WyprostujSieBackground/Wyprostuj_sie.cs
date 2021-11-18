@@ -20,7 +20,8 @@ namespace WyprostujSieBackground
         public Wyprostuj_sie()
         {
             kinect = new Kinect(false);
-            data = new Data(true);
+            data = new Data(true, false);
+
 
             InitializeComponent();
         }
@@ -32,6 +33,8 @@ namespace WyprostujSieBackground
 
         protected override void OnStop()
         {
+            kinect = null;
+
             System.IO.File.Create(AppDomain.CurrentDomain.BaseDirectory + "OnStop.txt");
         }
     }

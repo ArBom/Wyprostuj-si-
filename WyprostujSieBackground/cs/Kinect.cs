@@ -179,7 +179,7 @@ namespace WyprostujSieBackground
             }
         }
 
-        public void multisourceFrameArrived(object sender, MultiSourceFrameArrivedEventArgs e)
+        public void MultisourceFrameArrived(object sender, MultiSourceFrameArrivedEventArgs e)
         {
             MultiSourceFrame reference = e.FrameReference.AcquireFrame();
 
@@ -402,7 +402,7 @@ namespace WyprostujSieBackground
 
             if (multiSourceFrameReader != null)
             {
-                multiSourceFrameReader.MultiSourceFrameArrived += multisourceFrameArrived;
+                multiSourceFrameReader.MultiSourceFrameArrived += MultisourceFrameArrived;
             }
         }
 

@@ -38,7 +38,7 @@
                 <CheckBox x:Name="headChB"
                           Grid.Row="0"
                           Content="W przypadku głowy"
-                          Click="headCbBClicked"
+                          Click="HeadCbBClicked"
                           />
                 <Slider x:Name="headSlider"
                         Grid.Row="1"
@@ -109,11 +109,11 @@
                 <CheckBox x:Name="noPersonChB"
                           Grid.Row="0"
                           Content="Informuj jeśli brak sylwetek"
-                          Click="noPersonChB_Click"/>
+                          Click="NoPersonChB_Click"/>
                 <CheckBox x:Name="toManyPersonChB"
                           Grid.Row="1"
                           Content="Informuj jeśli więcej niż 1 sylwetka"
-                          Click="toManyPersonChB_Click"/>
+                          Click="ToManyPersonChB_Click"/>
             </Grid>
 
             <Button Click="Button_Click" 

@@ -17,12 +17,12 @@ namespace WyprostujSieBackground
             InitializeComponent();
         }
 
-        private void serviceInstaller1_AfterInstall(object sender, InstallEventArgs e)
+        private void ServiceInstaller1_AfterInstall(object sender, InstallEventArgs e)
         {
             new ServiceController(serviceInstaller.ServiceName).Start();
         }
 
-        private void serviceProcessInstaller1_AfterInstall(object sender, InstallEventArgs e)
+        private void ServiceProcessInstaller1_AfterInstall(object sender, InstallEventArgs e)
         {
 
         }

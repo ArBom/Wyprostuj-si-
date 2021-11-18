@@ -12,6 +12,8 @@ namespace WyprostujSieBackground
 {
     public class Data
     {
+        private readonly bool toSave;
+
         const string SpineAnBKey = "SpineAnB";
         [JsonProperty(PropertyName = SpineAnBKey)]
         public bool SpineAnB = true;
@@ -52,12 +54,15 @@ namespace WyprostujSieBackground
 
         public async Task Save()
         {
-            string serialize = this.ToString();
-
-            using (var sw = new StreamWriter(Path.Combine(configFolder, fileName)))
+            if (toSave)
             {
-                await sw.WriteAsync(serialize);
-            }         
+                string serialize = this.ToString();
+
+                using (var sw = new StreamWriter(Path.Combine(configFolder, fileName)))
+                {
+                    await sw.WriteAsync(serialize);
+                }
+            }
         }
 
         private void ReadData()
@@ -80,8 +85,9 @@ namespace WyprostujSieBackground
             return JsonConvert.SerializeObject(this);
         }
 
-        public Data(bool read)
+        public Data(bool read, bool toSave)
         {
+            this.toSave = toSave;
 
             string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             configFolder = Path.Combine(commonAppData, "WyprostujSie");

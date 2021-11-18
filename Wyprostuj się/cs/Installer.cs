@@ -49,7 +49,7 @@ public class MyProjectInstaller : Installer
         {
             case ExpectedState.Install:
                 {
-                    if (!installed())
+                    if (!Installed())
                     {
                         try
                         {
@@ -61,13 +61,14 @@ public class MyProjectInstaller : Installer
                 }
             case ExpectedState.Uninstall:
                 {
-                    if (installed())
+                    if (Installed())
                     {
                         try
                         {
                             if (serviceController.Status == ServiceControllerStatus.Running || serviceController.Status == ServiceControllerStatus.StartPending)
                             {
                                 serviceController.Stop();
+                                serviceController.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(3));
                             }
                             serviceInstaller.Uninstall(null);
                         }
@@ -77,13 +78,14 @@ public class MyProjectInstaller : Installer
                 }
             case ExpectedState.Stop:
                 {
-                    if (installed())
+                    if (Installed())
                     {
                         if (serviceController.Status == ServiceControllerStatus.Running || serviceController.Status == ServiceControllerStatus.StartPending)
                         {
                             try
                             {
                                 serviceController.Stop();
+                                serviceController.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(5));
                             }
                             catch { }
                         }
@@ -92,13 +94,14 @@ public class MyProjectInstaller : Installer
                 }
             case ExpectedState.Start:
                 {
-                    if (installed())
+                    if (Installed())
                     {
                         if (serviceController.Status == ServiceControllerStatus.Stopped || serviceController.Status == ServiceControllerStatus.StopPending)
                         {
                             try
                             {
                                 serviceController.Start();
+                                serviceController.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(5));
                             }
                             catch { }
                         }
@@ -108,7 +111,7 @@ public class MyProjectInstaller : Installer
         }
     }
 
-    public static bool installed()
+    public static bool Installed()
     {
         return ServiceController.GetServices().Any(s => s.ServiceName == ServiceName);
     }

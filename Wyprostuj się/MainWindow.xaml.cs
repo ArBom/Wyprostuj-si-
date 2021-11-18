@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 using System.Xml;
 
 using System.ServiceProcess;
-using Microsoft.Toolkit.Uwp.Notifications;
 using System.Security.Principal;
 using System.Windows.Threading;
 
@@ -43,27 +42,27 @@ namespace WyprostujSie
             using (MyProjectInstaller mpi = new MyProjectInstaller(ExpectedState.Stop))
 
             kinect = new WyprostujSieBackground.Kinect(true);
-            data = new WyprostujSieBackground.Data(true);
+            data = new WyprostujSieBackground.Data(true, true);
             kalmanFilters = new WyprostujSieBackground.KalmanFilter[3];
             notifications = new Notifications();
 
             InitializeComponent();
-            this.autorunChB.IsChecked = MyProjectInstaller.installed();
+            this.autorunChB.IsChecked = MyProjectInstaller.Installed();
             this.autorunChB.IsEnabled = IsAdmin;
             if (!IsAdmin)
             {
-                notifications.addNotif("Uruchom aplikację jako administrator, aby móc korzystać ze wszystkich funkcji.", Brushes.Yellow, "admin");
+                notifications.AddNotif("Uruchom aplikację jako administrator, aby móc korzystać ze wszystkich funkcji.", Brushes.Yellow, "admin");
             }
 
-            setValuaes();
+            SetValuaes();
 
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Interval = TimeSpan.FromSeconds(5);
-            dispatcherTimer.Tick += setStatus;
+            dispatcherTimer.Tick += SetStatus;
             dispatcherTimer.Start();
         }
 
-        public void setStatus(object sender, EventArgs e)
+        public void SetStatus(object sender, EventArgs e)
         {
             Tuple<string, Brush> newStatus = notifications.ChNoti();
 
@@ -71,7 +70,7 @@ namespace WyprostujSie
             Status.Background = newStatus.Item2;
         }
 
-        private void setValuaes()
+        private void SetValuaes()
         {
             this.spineChB.IsChecked = data.SpineAnB;
             this.spineSlider.Value = data.SpineAnD;
@@ -89,7 +88,7 @@ namespace WyprostujSie
             this.toManyPersonChB.IsChecked = data.TMPersB;
         }
 
-        private async void UpdateScreen()
+        private void UpdateScreen()
         {
             this.kinColour.Source = kinect.colorBitmap;
             this.kinSpindlelegs.Source = kinect.ImageSource;
@@ -116,54 +115,18 @@ namespace WyprostujSie
                 bokLabel.Foreground = Brushes.Green;
         }
 
-        private void NumOfPeoleChanged(int howMamyPeolple)
-        {
-            if (howMamyPeolple == 0 && noPersonChB.IsChecked.Value)
-            {
-                new ToastContentBuilder()
-                    .SetToastScenario(ToastScenario.Default)
-                    .AddArgument("howManyP")
-                    .AddText("Wyprostuj się")
-                    .AddText("Nie widać cię")
-                    .Show(toast =>
-                    {
-                        toast.Tag = "howManyP";
-                        toast.Group = "WyprostujSieGrop";
-                    });
-            }
-            else if (howMamyPeolple > 1 && toManyPersonChB.IsChecked.Value)
-            {
-                new ToastContentBuilder()
-                    .SetToastScenario(ToastScenario.Default)
-                    .AddText("Wyprostuj się")
-                    .AddText("Więcej niż jedna osoba.")
-                    .Show(toast =>
-                    {
-                        toast.Tag = "howManyP";
-                        toast.Group = "WyprostujSieGrop";
-                        toast.SuppressPopup = true;
-                    });
-            }
-        }
-
-        private void ShowNot(Uri uriOfPic)
-        {
-            new ToastContentBuilder()
-                .SetToastScenario(ToastScenario.Default)
-                .AddArgument("eventId", 1983)
-                .AddText("Wyprostuj się")
-                .AddText("Tak będzie wyglądać przykładowe powiadomienie")
-                .AddInlineImage(uriOfPic)
-                .Show();
-        }
-
+        /*
+        }*/
+        /*
+*/
+        
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Task.Run(() =>
             {
                 kinect.newData += UpdateScreen;
-                kinect.takenPic += ShowNot;
-                kinect.personAtPhoto += NumOfPeoleChanged;
+                //kinect.takenPic += ShowNot;
+                //kinect.personAtPhoto += NumOfPeoleChanged;
             });
 
             Brush backgroundColor;
@@ -186,14 +149,14 @@ namespace WyprostujSie
                     }
             }
 
-            notifications.addNotif(content, backgroundColor, "kinect");
+            notifications.AddNotif(content, backgroundColor, "kinect");
         }
-
+        
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             kinect.newData -= UpdateScreen;
             kinect = null;
-            using (MyProjectInstaller mpi = new MyProjectInstaller(ExpectedState.Start));
+            using (MyProjectInstaller mpi = new MyProjectInstaller(ExpectedState.Start)) { };
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -212,7 +175,7 @@ namespace WyprostujSie
             data.Save();
         }
 
-        private void headCbBClicked(object sender, RoutedEventArgs e)
+        private void HeadCbBClicked(object sender, RoutedEventArgs e)
         {
             if (headChB.IsChecked == true)
                 headSlider.IsEnabled = true;
@@ -243,19 +206,19 @@ namespace WyprostujSie
             data.Save();
         }
 
-        private void noPersonChB_Click(object sender, RoutedEventArgs e)
+        private void NoPersonChB_Click(object sender, RoutedEventArgs e)
         {
             data.NoPersB = (sender as CheckBox).IsChecked.Value;
             data.Save();
         }
 
-        private void toManyPersonChB_Click(object sender, RoutedEventArgs e)
+        private void ToManyPersonChB_Click(object sender, RoutedEventArgs e)
         {
             data.TMPersB = (sender as CheckBox).IsChecked.Value;
             data.Save();
         }
 
-        private void AutorunChB_Click(object sender, RoutedEventArgs e)
+        private async void AutorunChB_Click(object sender, RoutedEventArgs e)
         {
             autorunChB.IsEnabled = false;
             UpdateLayout();

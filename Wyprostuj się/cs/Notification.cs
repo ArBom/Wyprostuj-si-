@@ -15,18 +15,18 @@ namespace WyprostujSie
         protected short actCount;
         private List<Tuple<string, Brush, string>> notificationsList;
 
-        public void addNotif(string Content, Brush Background, string Tag)
+        public void AddNotif(string Content, Brush Background, string Tag)
         {
             Tuple<string, Brush, string> newNotif = new Tuple<string, Brush, string>(Content, Background, Tag);
             notificationsList.Add(newNotif);
         }
 
-        public void delNotif(string Tag)
+        public void DelNotif(string Tag)
         {
            
         }
 
-        public void updNotif(string Content, Brush Background, string Tag)
+        public void UpdNotif(string Content, Brush Background, string Tag)
         {
 
         }
