@@ -51,7 +51,7 @@ namespace WyprostujSie
             this.autorunChB.IsEnabled = IsAdmin;
             if (!IsAdmin)
             {
-                notifications.AddNotif("Uruchom aplikację jako administrator, aby móc korzystać ze wszystkich funkcji.", Brushes.Yellow, "admin");
+                notifications.AddNotif( Properties.Resources.adminNotif.ToString(), Brushes.Yellow, "admin");
             }
 
             SetValuaes();
@@ -137,7 +137,7 @@ namespace WyprostujSie
                 case "SensorNotAvailableStatusText":
                     {
                         backgroundColor = Brushes.Red;
-                        content = "Nie można połączyć się z sensorem Kinect.";
+                        content = Properties.Resources.errorKinectConnNotif;
                         break;
                     }
                 default:
@@ -164,7 +164,7 @@ namespace WyprostujSie
             kinect.takePic = true;
         }
 
-        private void SpineChB_Click(object sender, RoutedEventArgs e)
+        private async void SpineChB_Click(object sender, RoutedEventArgs e)
         {
             if (spineChB.IsChecked == true)
                 spineSlider.IsEnabled = true;
@@ -172,10 +172,10 @@ namespace WyprostujSie
                 spineSlider.IsEnabled = false;
 
             data.SpineAnB = spineChB.IsChecked.Value;
-            data.Save();
+            await data.Save();
         }
 
-        private void HeadCbBClicked(object sender, RoutedEventArgs e)
+        private async void HeadCbBClicked(object sender, RoutedEventArgs e)
         {
             if (headChB.IsChecked == true)
                 headSlider.IsEnabled = true;
@@ -183,10 +183,10 @@ namespace WyprostujSie
                 headSlider.IsEnabled = false;
 
             data.NeckAnB = headChB.IsChecked.Value;
-            data.Save();
+            await data.Save();
         }
 
-        private void BokChB_Click(object sender, RoutedEventArgs e)
+        private async void BokChB_Click(object sender, RoutedEventArgs e)
         {
             if (bokChB.IsChecked == true)
                 bokSlider.IsEnabled = true;
@@ -194,28 +194,28 @@ namespace WyprostujSie
                 bokSlider.IsEnabled = false;
 
             data.BokAnB = bokChB.IsChecked.Value;
-            data.Save();
+            await data.Save();
         }
 
-        private void Slider_Changed(object sender, RoutedEventArgs e)
+        private async void Slider_Changed(object sender, RoutedEventArgs e)
         {
             data.BokAnD = bokSlider.Value;
             data.NeckAnD = headSlider.Value;
             data.SpineAnD = spineSlider.Value;
 
-            data.Save();
+            await data.Save();
         }
 
-        private void NoPersonChB_Click(object sender, RoutedEventArgs e)
+        private async void NoPersonChB_Click(object sender, RoutedEventArgs e)
         {
             data.NoPersB = (sender as CheckBox).IsChecked.Value;
-            data.Save();
+            await data.Save();
         }
 
-        private void ToManyPersonChB_Click(object sender, RoutedEventArgs e)
+        private async void ToManyPersonChB_Click(object sender, RoutedEventArgs e)
         {
             data.TMPersB = (sender as CheckBox).IsChecked.Value;
-            data.Save();
+            await data.Save();
         }
 
         private async void AutorunChB_Click(object sender, RoutedEventArgs e)

@@ -22,6 +22,8 @@ namespace WyprostujSieBackground
             data = new Data(true, false);
             kinect = new Kinect(data.SpineAnB, data.BokAnB, data.NeckAnB, data.SpineAnD, data.BokAnD, data.NeckAnD);
 
+            kinect.takenPic += Toast.ShowNot;
+
             InitializeComponent();
         }
 
@@ -32,6 +34,7 @@ namespace WyprostujSieBackground
 
         protected override void OnStop()
         {
+            kinect.takenPic -= Toast.ShowNot;
             kinect = null;
 
             System.IO.File.Create(AppDomain.CurrentDomain.BaseDirectory + "OnStop.txt");

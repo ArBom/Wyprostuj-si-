@@ -118,33 +118,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="adminNotif" xml:space="preserve">
-    <value>Run this app as admin to use all them functions.</value>
+    <value>Uruchom aplikację jako administrator, aby móc korzystać ze wszystkich jej funkcji.</value>
   </data>
   <data name="autorun" xml:space="preserve">
-    <value>Run automatically at Wind. startup</value>
+    <value>Uruchamiaj z syst. Windows</value>
   </data>
   <data name="bokContent" xml:space="preserve">
-    <value>...leaning to one side</value>
+    <value>...przechylenia się na bok</value>
   </data>
   <data name="errorKinectConnNotif" xml:space="preserve">
-    <value>Its no way to connect with Kinect sensor.</value>
+    <value>Nie można połączyć się z sensorem Kinect.</value>
   </data>
   <data name="headContent" xml:space="preserve">
-    <value>...forward head position</value>
+    <value>...wysunięcia głowy w przód</value>
   </data>
   <data name="header" xml:space="preserve">
-    <value>Let me know in case of...</value>
+    <value>Poinformuj mnie w przypadku...</value>
   </data>
   <data name="noPersonContent" xml:space="preserve">
-    <value>...no person found</value>
+    <value>...braku wykryt. sylwetek osób</value>
   </data>
   <data name="spineContent" xml:space="preserve">
-    <value>...leaning forward</value>
+    <value>...zbytniego pochylenia ciała</value>
   </data>
   <data name="titleBar" xml:space="preserve">
     <value>Ustawienia programu "Wyprostuj się"</value>
   </data>
   <data name="toManyPersonContent" xml:space="preserve">
-    <value>...more than 1 person found</value>
+    <value>...większ. niż 1 os. w polu widzenia</value>
   </data>
 </root>

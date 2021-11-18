@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Wyprostuj_sie
+namespace WyprostujSie
 {
     /// <summary>
     /// Logika interakcji dla klasy App.xaml

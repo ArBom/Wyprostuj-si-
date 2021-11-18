@@ -22,7 +22,7 @@ namespace WyprostujSie.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace WyprostujSie.Properties {
         /// Zwraca buforowane wystąpienie ResourceManager używane przez tę klasę.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WyprostujSie.Properties.Resources", typeof(Resources).Assembly);
@@ -51,12 +51,102 @@ namespace WyprostujSie.Properties {
         ///   przypadków przeszukiwania zasobów za pomocą tej klasy zasobów wymagającej zdefiniowania typu.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Run this app as admin to use all them functions..
+        /// </summary>
+        public static string adminNotif {
+            get {
+                return ResourceManager.GetString("adminNotif", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Run automatically at Wind. startup.
+        /// </summary>
+        public static string autorun {
+            get {
+                return ResourceManager.GetString("autorun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu ...leaning to one side.
+        /// </summary>
+        public static string bokContent {
+            get {
+                return ResourceManager.GetString("bokContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Its no way to connect with Kinect sensor..
+        /// </summary>
+        public static string errorKinectConnNotif {
+            get {
+                return ResourceManager.GetString("errorKinectConnNotif", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu ...forward head position.
+        /// </summary>
+        public static string headContent {
+            get {
+                return ResourceManager.GetString("headContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Let me know in case of....
+        /// </summary>
+        public static string header {
+            get {
+                return ResourceManager.GetString("header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu ...no person found.
+        /// </summary>
+        public static string noPersonContent {
+            get {
+                return ResourceManager.GetString("noPersonContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu ...leaning forward.
+        /// </summary>
+        public static string spineContent {
+            get {
+                return ResourceManager.GetString("spineContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Ustawienia programu &quot;Wyprostuj się&quot;.
+        /// </summary>
+        public static string titleBar {
+            get {
+                return ResourceManager.GetString("titleBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu ...more than 1 person found.
+        /// </summary>
+        public static string toManyPersonContent {
+            get {
+                return ResourceManager.GetString("toManyPersonContent", resourceCulture);
             }
         }
     }

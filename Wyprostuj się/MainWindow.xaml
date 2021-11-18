@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Wyprostuj_sie"
+        xmlns:local="clr-namespace:WyprostujSie"
+        xmlns:p="clr-namespace:WyprostujSie.Properties"
         mc:Ignorable="d"
-        Title="Ustawienia programu Wyprostuj się" Height="450" Width="800"
+        Title="{x:Static p:Resources.titleBar}" Height="450" Width="800"
         Loaded="Window_Loaded"
         Closing="Window_Closing">
     <Grid>
@@ -26,10 +27,10 @@
             </Grid.RowDefinitions>
             <CheckBox x:Name="autorunChB"
                       Grid.Row="0"
-                      Content="Uruchamiaj z systemem"
+                      Content="{x:Static p:Resources.autorun}"
                       Click="AutorunChB_Click"
                       />
-            <Label Grid.Row="1" Content="Informuj mnie w razie..."/>
+            <Label Grid.Row="1" Content="{x:Static p:Resources.header}"/>
             <Grid Grid.Row="2"
                   VerticalAlignment="Top">
                 <Grid.RowDefinitions>
@@ -39,7 +40,7 @@
                 </Grid.RowDefinitions>
                 <CheckBox x:Name="headChB"
                           Grid.Row="0"
-                          Content="...zbytniego przechylenia głowy"
+                          Content="{x:Static p:Resources.headContent}"
                           Click="HeadCbBClicked"
                           />
                 <Slider x:Name="headSlider"
@@ -64,7 +65,7 @@
                 </Grid.RowDefinitions>
                 <CheckBox x:Name="spineChB"
                           Grid.Row="0"
-                          Content="...pochylenia ciała w przód"
+                          Content="{x:Static p:Resources.spineContent}"
                           Click="SpineChB_Click"
                           />
                 <Slider x:Name="spineSlider"
@@ -87,7 +88,7 @@
                 </Grid.RowDefinitions>
                 <CheckBox x:Name="bokChB"
                           Grid.Row="0"
-                          Content="...przechylenia na bok"
+                          Content="{x:Static p:Resources.bokContent}"
                           Click="BokChB_Click"
                           />
                 <Slider x:Name="bokSlider"
@@ -110,7 +111,7 @@
                 </Grid.RowDefinitions>
                 <CheckBox x:Name="noPersonChB"
                           Grid.Row="0"
-                          Content="...braku wykrytych sylwetek"
+                          Content="{x:Static p:Resources.noPersonContent}"
                           Click="NoPersonChB_Click"/>
                 <CheckBox x:Name="toManyPersonChB"
                           Grid.Row="1"

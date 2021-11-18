@@ -259,7 +259,6 @@ namespace WyprostujSieBackground
                 using (FileStream stream = new FileStream(PicPath, FileMode.Create))
                 {
                     JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-                    //PngBitmapEncoder encoder = new PngBitmapEncoder();
 
                     encoder.Frames.Add(BitmapFrame.Create(colorBitmap));
                     encoder.Save(stream);

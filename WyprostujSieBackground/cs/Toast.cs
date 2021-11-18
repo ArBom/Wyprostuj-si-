@@ -8,9 +8,9 @@ using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace WyprostujSieBackground
 {
-    public class Toast
+    public static class Toast
     {
-        public void ShowNot(Uri uriOfPic)
+        public static void ShowNot(Uri uriOfPic)
         {
             new ToastContentBuilder()
                 .SetToastScenario(ToastScenario.Default)
@@ -21,7 +21,7 @@ namespace WyprostujSieBackground
                 .Show();
         }
 
-        void NumOfPeoleChanged(int howMamyPeolple)
+        static void NumOfPeoleChanged(int howMamyPeolple)
         {
             if (howMamyPeolple == 0 && true)
             {
