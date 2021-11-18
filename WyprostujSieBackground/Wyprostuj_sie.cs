@@ -19,9 +19,8 @@ namespace WyprostujSieBackground
 
         public Wyprostuj_sie()
         {
-            kinect = new Kinect(false);
             data = new Data(true, false);
-
+            kinect = new Kinect(data.SpineAnB, data.BokAnB, data.NeckAnB, data.SpineAnD, data.BokAnD, data.NeckAnD);
 
             InitializeComponent();
         }

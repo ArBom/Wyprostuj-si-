@@ -49,6 +49,14 @@ namespace WyprostujSieBackground
         public double BokAn { get; private set; } = 0;
         public double NeckAn { get; private set; } = 0;
 
+        readonly double SpineAnTreshold;
+        readonly double BokAnTreshold;
+        readonly double NeckAnTreshold;
+
+        readonly bool SpineAnWatched;
+        readonly bool BokAnWatched;
+        readonly bool NeckAnWatched;
+
         private const float InferredZPositionClamp = 0.1f;
 
         public string StatusText;
@@ -81,6 +89,24 @@ namespace WyprostujSieBackground
 
                 if (head.TrackingState == TrackingState.Tracked)
                     NeckAn = Math.Atan2(head.Position.Y - neck.Position.Y, head.Position.X - neck.Position.X) - SpineAn;
+            }
+
+            if (SpineAnWatched)
+            {
+                if (SpineAn > SpineAnTreshold)
+                    takePic = true;
+            }
+
+            if (BokAnWatched)
+            {
+                if (BokAn > BokAnTreshold)
+                    takePic = true;
+            }
+
+            if (NeckAnWatched)
+            {
+                if (NeckAn > NeckAnTreshold)
+                    takePic = true;
             }
         }
 
@@ -319,9 +345,17 @@ namespace WyprostujSieBackground
             newData?.Invoke();
         }
 
-        public Kinect(bool draw)
+        public Kinect(bool SpineAnWatched, bool BokAnWatched, bool NeckAnWatched, double SpineAnTreshold, double BokAnTreshold, double NeckAnTreshold)
         {
-            this.draw = draw;
+            this.SpineAnTreshold = SpineAnTreshold;
+            this.BokAnTreshold = BokAnTreshold;
+            this.NeckAnTreshold = NeckAnTreshold;
+
+            this.SpineAnWatched = SpineAnWatched;
+            this.BokAnWatched = BokAnWatched;
+            this.NeckAnWatched = NeckAnWatched;
+            this.draw = false;
+
             this.kinectSensor = KinectSensor.GetDefault();
             this.coordinateMapper = this.kinectSensor.CoordinateMapper;
 
@@ -329,8 +363,31 @@ namespace WyprostujSieBackground
             this.displayWidth = frameDescription.Width;
             this.displayHeight = frameDescription.Height;
 
+            StartWork();
+        }
+
+        public Kinect(bool draw)
+        {
+            this.draw = draw;
+
+            this.SpineAnWatched = false;
+            this.BokAnWatched = false;
+            this.NeckAnWatched = false;
+
+            this.kinectSensor = KinectSensor.GetDefault();
+            this.coordinateMapper = this.kinectSensor.CoordinateMapper;
+
+            FrameDescription frameDescription = this.kinectSensor.DepthFrameSource.FrameDescription;
+            this.displayWidth = frameDescription.Width;
+            this.displayHeight = frameDescription.Height;
+
+            StartWork();
+        }
+
+        private void StartWork()
+        {
             multiSourceFrameReader = this.kinectSensor.OpenMultiSourceFrameReader(FrameSourceTypes.Color | FrameSourceTypes.Body);
-            
+
             this.bodyFrameReader = this.kinectSensor.BodyFrameSource.OpenReader();
             this.colorFrameReader = this.kinectSensor.ColorFrameSource.OpenReader();
 

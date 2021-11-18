@@ -17,6 +17,7 @@
         <Grid Grid.Column="0" Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="21"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="70"/>
                 <RowDefinition Height="70"/>
                 <RowDefinition Height="70"/>
@@ -28,7 +29,8 @@
                       Content="Uruchamiaj z systemem"
                       Click="AutorunChB_Click"
                       />
-            <Grid Grid.Row="1"
+            <Label Grid.Row="1" Content="Informuj mnie w razie..."/>
+            <Grid Grid.Row="2"
                   VerticalAlignment="Top">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20"/>
@@ -37,7 +39,7 @@
                 </Grid.RowDefinitions>
                 <CheckBox x:Name="headChB"
                           Grid.Row="0"
-                          Content="W przypadku głowy"
+                          Content="...zbytniego przechylenia głowy"
                           Click="HeadCbBClicked"
                           />
                 <Slider x:Name="headSlider"
@@ -54,7 +56,7 @@
             </Grid>
             <Grid
                   VerticalAlignment="Top"
-                  Grid.Row="2">
+                  Grid.Row="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20"/>
                     <RowDefinition Height="20"/>
@@ -62,7 +64,7 @@
                 </Grid.RowDefinitions>
                 <CheckBox x:Name="spineChB"
                           Grid.Row="0"
-                          Content="kręgosłup"
+                          Content="...pochylenia ciała w przód"
                           Click="SpineChB_Click"
                           />
                 <Slider x:Name="spineSlider"
@@ -76,7 +78,7 @@
                        VerticalAlignment="Top"
                        />
             </Grid>
-            <Grid Grid.Row="3"
+            <Grid Grid.Row="4"
                   VerticalAlignment="Top">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20"/>
@@ -85,7 +87,7 @@
                 </Grid.RowDefinitions>
                 <CheckBox x:Name="bokChB"
                           Grid.Row="0"
-                          Content="przechylenie na bok"
+                          Content="...przechylenia na bok"
                           Click="BokChB_Click"
                           />
                 <Slider x:Name="bokSlider"
@@ -99,7 +101,7 @@
                        VerticalAlignment="Top"
                        />
             </Grid>
-            <Grid Grid.Row="4"
+            <Grid Grid.Row="5"
                   VerticalAlignment="Top"
                   Height="40" Margin="0,0.4,0,0">
                 <Grid.RowDefinitions>
@@ -108,16 +110,16 @@
                 </Grid.RowDefinitions>
                 <CheckBox x:Name="noPersonChB"
                           Grid.Row="0"
-                          Content="Informuj jeśli brak sylwetek"
+                          Content="...braku wykrytych sylwetek"
                           Click="NoPersonChB_Click"/>
                 <CheckBox x:Name="toManyPersonChB"
                           Grid.Row="1"
-                          Content="Informuj jeśli więcej niż 1 sylwetka"
+                          Content="...> niż 1os. w polu widzenia"
                           Click="ToManyPersonChB_Click"/>
             </Grid>
 
             <Button Click="Button_Click" 
-                    Grid.Row="4"
+                    Grid.Row="5"
                     AutomationProperties.IsRequiredForForm="True" 
                     MaxHeight="50" 
                     MaxWidth="100" 
