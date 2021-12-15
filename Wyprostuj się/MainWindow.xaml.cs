@@ -114,11 +114,6 @@ namespace WyprostujSie
             else
                 bokLabel.Foreground = Brushes.Green;
         }
-
-        /*
-        }*/
-        /*
-*/
         
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -199,11 +194,31 @@ namespace WyprostujSie
 
         private async void Slider_Changed(object sender, RoutedEventArgs e)
         {
-            data.BokAnD = bokSlider.Value;
-            data.NeckAnD = headSlider.Value;
-            data.SpineAnD = spineSlider.Value;
+            var s = (Slider)sender;
+
+            switch(s.Name)
+            {
+                case "headSlider":
+                    {
+                        data.NeckAnD = headSlider.Value;
+                        break;
+                    }
+
+                case "bokSlider":
+                    {
+                        data.BokAnD = bokSlider.Value;
+                        break;
+                    }
+
+                case "spineSlider":
+                    {
+                        data.SpineAnD = spineSlider.Value;
+                        break;
+                    }
+            }
 
             await data.Save();
+
         }
 
         private async void NoPersonChB_Click(object sender, RoutedEventArgs e)
@@ -218,7 +233,7 @@ namespace WyprostujSie
             await data.Save();
         }
 
-        private async void AutorunChB_Click(object sender, RoutedEventArgs e)
+        private void AutorunChB_Click(object sender, RoutedEventArgs e)
         {
             autorunChB.IsEnabled = false;
             UpdateLayout();

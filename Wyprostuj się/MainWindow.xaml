@@ -47,7 +47,6 @@
                         Grid.Row="1"
                         Minimum="0" 
                         Maximum="10"
-                        Value="{Binding Value}"
                         ValueChanged="Slider_Changed"
                           />
                 <Label x:Name="headLabel"
@@ -94,8 +93,7 @@
                 <Slider x:Name="bokSlider"
                         Grid.Row="1"
                         Minimum="0" 
-                        Maximum="10"
-                        ValueChanged="Slider_Changed"
+                        Maximum="10" ValueChanged="Slider_Changed"
                           />
                 <Label x:Name="bokLabel"
                        Grid.Row="2"

@@ -9,7 +9,8 @@ namespace WyprostujSieBackground
     //https://stackoverflow.com/questions/39315817/filtering-streaming-data-to-reduce-noise-kalman-filter-c-sharp
     public class KalmanFilter
     {
-        private double A, H, Q, R, P, x;
+        private readonly double A, H, Q, R;
+        private double P, x;
 
         public KalmanFilter(double A, double H, double Q, double R, double initial_P, double initial_x)
         {
