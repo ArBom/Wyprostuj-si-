@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         Title="{x:Static p:Resources.titleBar}" Height="450" Width="800"
         Loaded="Window_Loaded"
-        Closing="Window_Closing">
+        Closing="Window_Closing" 
+        Topmost="True">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -52,6 +53,7 @@
                 <Label x:Name="headLabel"
                        Grid.Row="2"
                        VerticalAlignment="Top"
+                       HorizontalAlignment="Right"
                        />
             </Grid>
             <Grid
@@ -76,6 +78,7 @@
                 <Label x:Name="SpineLabel"
                        Grid.Row="2"
                        VerticalAlignment="Top"
+                       HorizontalAlignment="Right"
                        />
             </Grid>
             <Grid Grid.Row="4"
@@ -98,6 +101,7 @@
                 <Label x:Name="bokLabel"
                        Grid.Row="2"
                        VerticalAlignment="Top"
+                       HorizontalAlignment="Right"
                        />
             </Grid>
             <Grid Grid.Row="5"
@@ -134,6 +138,6 @@
                 <Image x:Name="kinSpindlelegs" Source="{Binding SpindlelegsSource}" Stretch="UniformToFill" />
             </Viewbox>
         </Grid>
-        <Label x:Name="Status" Content="Status: OK" Margin="5,5,5,5" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" x:FieldModifier="public"/>
+        <Label x:Name="Status" Content="Status: OK" Background="LimeGreen"  Margin="5,5,5,5" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" x:FieldModifier="public"/>
     </Grid>
 </Window>

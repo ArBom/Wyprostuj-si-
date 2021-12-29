@@ -73,14 +73,17 @@ namespace WyprostujSie
         private void SetValuaes()
         {
             this.spineChB.IsChecked = data.SpineAnB;
+            this.spineSlider.IsEnabled = this.spineChB.IsChecked.Value;
             this.spineSlider.Value = data.SpineAnD;
             this.kalmanFilters[0] = new WyprostujSieBackground.KalmanFilter(1, 1, 0.18, 1, 0.095, data.SpineAnD);
 
             this.headChB.IsChecked = data.NeckAnB;
+            this.headSlider.IsEnabled = this.headChB.IsChecked.Value;
             this.headSlider.Value = data.NeckAnD;
             this.kalmanFilters[1] = new WyprostujSieBackground.KalmanFilter(1, 1, 0.175, 1, 0.09, data.NeckAnD);
 
             this.bokChB.IsChecked = data.BokAnB;
+            this.bokSlider.IsEnabled = this.bokChB.IsChecked.Value;
             this.bokSlider.Value = data.BokAnD;
             this.kalmanFilters[2] = new WyprostujSieBackground.KalmanFilter(1, 1, 0.175, 1, 0.09, data.BokAnD);
 

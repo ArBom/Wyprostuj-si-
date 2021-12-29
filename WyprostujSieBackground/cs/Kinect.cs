@@ -16,6 +16,8 @@ using Microsoft.Kinect;
 
 namespace WyprostujSieBackground
 {
+    public enum OnTick { Always, Waiting, Going};
+
     public class Kinect
     {
         private KinectSensor kinectSensor = null;
@@ -30,6 +32,7 @@ namespace WyprostujSieBackground
         private readonly Brush inferredJointBrush = Brushes.Yellow;
         private readonly Brush trackedJointBrush = new SolidColorBrush(Color.FromArgb(255, 68, 192, 68));
 
+        public OnTick onTick;
         private readonly bool draw;
         public bool takePic = false;
 
@@ -207,7 +210,12 @@ namespace WyprostujSieBackground
 
         public void MultisourceFrameArrived(object sender, MultiSourceFrameArrivedEventArgs e)
         {
-            MultiSourceFrame reference = e.FrameReference.AcquireFrame();
+            if (this.onTick == OnTick.Always || this.onTick == OnTick.Going || takePic)
+            {
+                if (this.onTick == OnTick.Going)
+                    this.onTick = OnTick.Waiting;
+
+                MultiSourceFrame reference = e.FrameReference.AcquireFrame();
 
             if (draw || takePic)
             {
@@ -250,22 +258,6 @@ namespace WyprostujSieBackground
                 }
             }
 
-            string SaveColorBitmap()
-            {
-                string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                var configFolder = Path.Combine(commonAppData, "WyprostujSie");
-                var PicPath = Path.Combine(configFolder, "photo.jpg");
-
-                using (FileStream stream = new FileStream(PicPath, FileMode.Create))
-                {
-                    JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-
-                    encoder.Frames.Add(BitmapFrame.Create(colorBitmap));
-                    encoder.Save(stream);
-                }
-
-                return PicPath;
-            }
 
             bool dataReceived = false;
             using (BodyFrame bodyFrame = reference.BodyFrameReference.AcquireFrame())
@@ -343,6 +335,30 @@ namespace WyprostujSieBackground
 
             newData?.Invoke();
         }
+        }
+
+        string SaveColorBitmap()
+        {
+            string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var configFolder = Path.Combine(commonAppData, "WyprostujSie");
+            var PicPath = Path.Combine(configFolder, "photo.jpg");
+
+            PicPath = "C://Users//arkad//AppData//Roaming//WyprostujSie//photo.jpg";
+            //using (
+            File.Delete(PicPath);
+            FileStream stream = new FileStream(PicPath, FileMode.CreateNew);
+               // )
+           // {
+                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+
+                encoder.Frames.Add(BitmapFrame.Create(colorBitmap));
+                encoder.Save(stream);
+
+            stream.Close();
+            //}
+
+            return PicPath;
+        }
 
         public Kinect(bool SpineAnWatched, bool BokAnWatched, bool NeckAnWatched, double SpineAnTreshold, double BokAnTreshold, double NeckAnTreshold)
         {
@@ -362,6 +378,8 @@ namespace WyprostujSieBackground
             this.displayWidth = frameDescription.Width;
             this.displayHeight = frameDescription.Height;
 
+            onTick = OnTick.Waiting;
+
             StartWork();
         }
 
@@ -380,6 +398,7 @@ namespace WyprostujSieBackground
             this.displayWidth = frameDescription.Width;
             this.displayHeight = frameDescription.Height;
 
+            onTick = OnTick.Always;
             StartWork();
         }
 

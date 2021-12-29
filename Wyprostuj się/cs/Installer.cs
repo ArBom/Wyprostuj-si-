@@ -27,6 +27,18 @@ public class MyProjectInstaller : Installer
         AbsolPath = String.Format("/assemblypath={0}", AbsolPath);
         String[] cmdline = { AbsolPath };
 
+
+        /*ServiceProcessInstaller spi = new ServiceProcessInstaller();
+        spi.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
+        spi.Password = null;
+        spi.Username = null;
+
+        this.Installers.Add(spi);*/
+
+        ProcesServiceInstaller.Account = System.ServiceProcess.ServiceAccount.LocalSystem; //ServiceAccount.User;
+        ProcesServiceInstaller.Username = null;
+        ProcesServiceInstaller.Password = null;
+
         serviceInstaller.Parent = ProcesServiceInstaller;
         Context = new InstallContext("", cmdline);
 
@@ -56,6 +68,8 @@ public class MyProjectInstaller : Installer
                             serviceInstaller.Install(null);
                         }
                         catch { }
+
+
                     }
                     break;
                 }
