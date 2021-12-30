@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.IO;
 
 namespace ToastPresenter
 {
@@ -22,7 +23,25 @@ namespace ToastPresenter
     {
         public MainWindow()
         {
-        
+            string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string configFolder = Path.Combine(commonAppData, "WyprostujSie");
+            string pathOfPhoto = (configFolder + @"\photo.jpg");
+
+            DateTimeOffset dateTimeOffset = DateTime.Now.AddSeconds(15);
+
+            new ToastContentBuilder()
+            .SetToastScenario(ToastScenario.Default)
+            .AddText("Wyprostuj się")
+            .AddHeroImage(new Uri(pathOfPhoto))
+            .Show( toast =>
+            {
+                toast.Tag = "WyprSie";
+                toast.SuppressPopup = false;
+                toast.ExpirationTime = dateTimeOffset;
+                toast.ExpiresOnReboot = false;
+            });
+
+            this.Close();
         }
     }
 }

@@ -5,6 +5,7 @@ VisualStudioVersion = 15.0.28307.1433
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wyprostuj się", "Wyprostuj się\Wyprostuj się.csproj", "{2A2738BC-D5AB-48BD-A2DF-A2B5677D98C6}"
 	ProjectSection(ProjectDependencies) = postProject
+		{6C9F381C-88A8-462C-AD8C-25DEA2331616} = {6C9F381C-88A8-462C-AD8C-25DEA2331616}
 		{FBBA508A-7637-410C-A55C-6982A377F201} = {FBBA508A-7637-410C-A55C-6982A377F201}
 	EndProjectSection
 EndProject

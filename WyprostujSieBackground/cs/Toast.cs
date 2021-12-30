@@ -256,11 +256,6 @@ namespace WyprostujSieBackground
             }
         }
 
-        public static void ShowNot(Uri uriOfPic)
-        {
-
-        }
-
         static void NumOfPeoleChanged(int howMamyPeolple)
         {
             if (howMamyPeolple == 0 && true)

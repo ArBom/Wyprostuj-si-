@@ -53,7 +53,6 @@ namespace WyprostujSieBackground
         protected override void OnStop()
         {
             timer.Elapsed -= onTick;
-            kinect.takenPic -= Toast.ShowNot;
             kinect = null;
 
             System.IO.File.Create(AppDomain.CurrentDomain.BaseDirectory + "OnStop.txt");
