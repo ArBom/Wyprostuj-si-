@@ -42,7 +42,7 @@ namespace WyprostujSieBackground
         [JsonProperty(PropertyName = TMPersBKey)]
         public bool TMPersB = true;
 
-        readonly string configFolder;
+        readonly public string configFolder;
         const string fileName = "wyprostujsie.json";
 
         private bool DataReadOk() //TODO

@@ -39,10 +39,10 @@ namespace WyprostujSie
 
         public MainWindow()
         {
-            using (MyProjectInstaller mpi = new MyProjectInstaller(ExpectedState.Stop))
+            data = new WyprostujSieBackground.Data(true, true);
+            using (MyProjectInstaller mpi = new MyProjectInstaller(ExpectedState.Stop, data.configFolder))
 
             kinect = new WyprostujSieBackground.Kinect(true);
-            data = new WyprostujSieBackground.Data(true, true);
             kalmanFilters = new WyprostujSieBackground.KalmanFilter[3];
             notifications = new Notifications();
 
@@ -55,6 +55,7 @@ namespace WyprostujSie
             }
 
             SetValuaes();
+            Files.CopyFiles(data.configFolder);
 
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Interval = TimeSpan.FromSeconds(5);
@@ -154,12 +155,12 @@ namespace WyprostujSie
         {
             kinect.newData -= UpdateScreen;
             kinect = null;
-            using (MyProjectInstaller mpi = new MyProjectInstaller(ExpectedState.Start)) { };
+            using (MyProjectInstaller mpi = new MyProjectInstaller(ExpectedState.Start, data.configFolder)) { };
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            kinect.takePic = true;
+
         }
 
         private async void SpineChB_Click(object sender, RoutedEventArgs e)
@@ -245,11 +246,11 @@ namespace WyprostujSie
 
             if (autorunChB.IsChecked.Value)
             {
-                myProjectInstaller = new MyProjectInstaller(ExpectedState.Install);
+                myProjectInstaller = new MyProjectInstaller(ExpectedState.Install, data.configFolder);
             }
             else
             {
-                myProjectInstaller = new MyProjectInstaller(ExpectedState.Uninstall);
+                myProjectInstaller = new MyProjectInstaller(ExpectedState.Uninstall, data.configFolder);
             }
 
             autorunChB.IsEnabled = true;

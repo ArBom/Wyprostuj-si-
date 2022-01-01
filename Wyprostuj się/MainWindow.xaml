@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:WyprostujSie"
         xmlns:p="clr-namespace:WyprostujSie.Properties"
         mc:Ignorable="d"
-        Title="{x:Static p:Resources.titleBar}" Height="450" Width="800"
+        Title="{x:Static p:Resources.titleBar}" Height="340" Width="800"
         Loaded="Window_Loaded"
         Closing="Window_Closing" 
-        Topmost="True">
+        Topmost="False">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>

@@ -23,9 +23,8 @@ namespace ToastPresenter
     {
         public MainWindow()
         {
-            string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string configFolder = Path.Combine(commonAppData, "WyprostujSie");
-            string pathOfPhoto = (configFolder + @"\photo.jpg");
+            string configFolder = AppDomain.CurrentDomain.BaseDirectory;
+            string pathOfPhoto = Path.Combine(configFolder, @"photo.jpg");
 
             DateTimeOffset dateTimeOffset = DateTime.Now.AddSeconds(15);
 

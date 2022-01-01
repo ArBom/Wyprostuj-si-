@@ -9,8 +9,6 @@ using System.Text;
 //using System.Threading;
 using System.Timers;
 
-using Notification.Wpf;
-
 namespace WyprostujSieBackground
 {
     public partial class Wyprostuj_sie : ServiceBase

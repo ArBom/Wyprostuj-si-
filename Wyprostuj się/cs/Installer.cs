@@ -14,7 +14,7 @@ public class MyProjectInstaller : Installer
     private ServiceInstaller serviceInstaller;
     private const string ServiceName = "WyprostujSieBackground";
 
-    public MyProjectInstaller(ExpectedState expectedState)
+    public MyProjectInstaller(ExpectedState expectedState, string RelatPath)
     {
         // Instantiate installers for process and services.
         serviceInstaller = new ServiceInstaller();
@@ -22,18 +22,11 @@ public class MyProjectInstaller : Installer
 
         InstallContext Context = new InstallContext();
 
-        String RelatPath = @"..\..\..\WyprostujSieBackground\bin\Debug\WyprostujSieBackground.exe";
+        //String RelatPath = @"..\..\..\WyprostujSieBackground\bin\Debug\WyprostujSieBackground.exe";
+
         String AbsolPath = Path.GetFullPath(RelatPath);
         AbsolPath = String.Format("/assemblypath={0}", AbsolPath);
         String[] cmdline = { AbsolPath };
-
-
-        /*ServiceProcessInstaller spi = new ServiceProcessInstaller();
-        spi.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
-        spi.Password = null;
-        spi.Username = null;
-
-        this.Installers.Add(spi);*/
 
         ProcesServiceInstaller.Account = System.ServiceProcess.ServiceAccount.LocalSystem; //ServiceAccount.User;
         ProcesServiceInstaller.Username = null;

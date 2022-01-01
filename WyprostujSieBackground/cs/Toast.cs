@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace WyprostujSieBackground
 {
@@ -253,36 +252,6 @@ namespace WyprostujSieBackground
                 }
                 CloseHandle(procInfo.hThread);
                 CloseHandle(procInfo.hProcess);
-            }
-        }
-
-        static void NumOfPeoleChanged(int howMamyPeolple)
-        {
-            if (howMamyPeolple == 0 && true)
-            {
-                new ToastContentBuilder()
-                    .SetToastScenario(ToastScenario.Default)
-                    .AddArgument("howManyP")
-                    .AddText("Wyprostuj się")
-                    .AddText("Nie widać cię")
-                    .Show(toast =>
-                    {
-                        toast.Tag = "howManyP";
-                        toast.Group = "WyprostujSieGrop";
-                    });
-            }
-            else if (howMamyPeolple > 1 && true)
-            {
-                new ToastContentBuilder()
-                    .SetToastScenario(ToastScenario.Default)
-                    .AddText("Wyprostuj się")
-                    .AddText("Więcej niż jedna osoba.")
-                    .Show(toast =>
-                    {
-                        toast.Tag = "howManyP";
-                        toast.Group = "WyprostujSieGrop";
-                        toast.SuppressPopup = true;
-                    });
             }
         }
     }

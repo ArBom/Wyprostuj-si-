@@ -86,6 +86,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="cs\Files.cs" />
     <Compile Include="cs\Installer.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -158,6 +159,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ToastPresenter\ToastPresenter.csproj">
+      <Project>{6c9f381c-88a8-462c-ad8c-25dea2331616}</Project>
+      <Name>ToastPresenter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WyprostujSieBackground\WyprostujSieBackground.csproj">
       <Project>{fbba508a-7637-410c-a55c-6982a377f201}</Project>
       <Name>WyprostujSieBackground</Name>
