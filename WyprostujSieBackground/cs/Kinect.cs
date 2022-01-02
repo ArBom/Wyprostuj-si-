@@ -343,7 +343,7 @@ namespace WyprostujSieBackground
             var configFolder = Path.Combine(commonAppData, "WyprostujSie");
             var PicPath = Path.Combine(configFolder, "photo.jpg");
 
-            PicPath = "C://Users//arkad//AppData//Roaming//WyprostujSie//photo.jpg";
+            PicPath = "C://Users//arkad//AppData//Roaming//WyprostujSie//photo.jpg"; //TODO
             //using (
             File.Delete(PicPath);
             FileStream stream = new FileStream(PicPath, FileMode.CreateNew);
