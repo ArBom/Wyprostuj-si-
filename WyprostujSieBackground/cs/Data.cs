@@ -35,10 +35,12 @@ namespace WyprostujSieBackground
         [JsonProperty(PropertyName = NeckAnKey)]
         public double NeckAnD = 0;
 
-        const string NoPersBKey = "NoPersB";
+        public const string BadPostureKey = "BadPosture";
+
+        public const string NoPersBKey = "NoPersB";
         [JsonProperty(PropertyName = NoPersBKey)]
         public bool NoPersB = true;
-        const string TMPersBKey = "TMPersB";
+        public const string TMPersBKey = "TMPersB";
         [JsonProperty(PropertyName = TMPersBKey)]
         public bool TMPersB = true;
 

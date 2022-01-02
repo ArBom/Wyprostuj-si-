@@ -16,12 +16,13 @@ namespace WyprostujSieBackground
         Kinect kinect;
         Data data;
         Timer timer;
+        int counter = 0;
 
         public Wyprostuj_sie()
         {
             timer = new Timer
             {
-                Interval = 60, //1 min.
+                Interval = 10000, //1 min.
                 AutoReset = true,     
             };
             timer.Elapsed += onTick;
@@ -36,7 +37,14 @@ namespace WyprostujSieBackground
 
         protected void onTick (Object source, ElapsedEventArgs e)
         {
-            Toast.ShowForDebug();
+            Toast.ShowForDebug(Data.BadPostureKey);
+
+            counter++;
+
+            if (counter>10)
+            {
+                timer.Stop();
+            }
             //kinect.onTick = OnTick.Going;
             //kinect.MultisourceFrameArrived(null, null);
             int a = 50;

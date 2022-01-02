@@ -72,6 +72,8 @@ namespace WyprostujSieBackground
 
         private List<Pen> bodyColors;
 
+        public const string PhotoFileName = "photo.jpg";
+
         private void Sensor_IsAvailableChanged(object sender, IsAvailableChangedEventArgs e) //TODO
         {
             // on failure, set the status text
@@ -341,7 +343,7 @@ namespace WyprostujSieBackground
         {
             string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var configFolder = Path.Combine(commonAppData, "WyprostujSie");
-            var PicPath = Path.Combine(configFolder, "photo.jpg");
+            var PicPath = Path.Combine(configFolder, PhotoFileName);
 
             PicPath = "C://Users//arkad//AppData//Roaming//WyprostujSie//photo.jpg"; //TODO
             //using (

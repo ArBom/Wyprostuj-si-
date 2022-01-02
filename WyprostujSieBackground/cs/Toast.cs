@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -197,9 +198,9 @@ namespace WyprostujSieBackground
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool DestroyEnvironmentBlock(IntPtr lpEnvironment);
 
-        public static void ShowForDebug()
+        public static void ShowForDebug(string ComandLineArgument)
         {
-            string appPath = "";
+            string appPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ToastPresenter.exe");
             bool visible = true;
             var hUserToken = IntPtr.Zero;
             var startInfo = new STARTUPINFO();
@@ -225,9 +226,10 @@ namespace WyprostujSieBackground
                     throw new Exception("StartProcessAsCurrentUser: CreateEnvironmentBlock failed.");
                 }
 
-                if (!CreateProcessAsUser(hUserToken,
-                    appPath, // Application Name
-                    null, // Command Line
+                if (!CreateProcessAsUser
+                    (hUserToken,
+                    null, // Application Name
+                    appPath + " " + ComandLineArgument, // Command Line
                     IntPtr.Zero,
                     IntPtr.Zero,
                     false,

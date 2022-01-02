@@ -23,23 +23,6 @@ namespace ToastPresenter
     {
         public MainWindow()
         {
-            string configFolder = AppDomain.CurrentDomain.BaseDirectory;
-            string pathOfPhoto = Path.Combine(configFolder, @"photo.jpg");
-
-            DateTimeOffset dateTimeOffset = DateTime.Now.AddSeconds(15);
-
-            new ToastContentBuilder()
-            .SetToastScenario(ToastScenario.Default)
-            .AddText("Wyprostuj się")
-            .AddHeroImage(new Uri(pathOfPhoto))
-            .Show( toast =>
-            {
-                toast.Tag = "WyprSie";
-                toast.SuppressPopup = false;
-                toast.ExpirationTime = dateTimeOffset;
-                toast.ExpiresOnReboot = false;
-            });
-
             this.Close();
         }
     }

@@ -22,15 +22,14 @@ public class MyProjectInstaller : Installer
 
         InstallContext Context = new InstallContext();
 
-        //String RelatPath = @"..\..\..\WyprostujSieBackground\bin\Debug\WyprostujSieBackground.exe";
-
         String AbsolPath = Path.GetFullPath(RelatPath);
+        AbsolPath = Path.Combine(AbsolPath, WyprostujSie.Files.WSB);
         AbsolPath = String.Format("/assemblypath={0}", AbsolPath);
         String[] cmdline = { AbsolPath };
 
-        ProcesServiceInstaller.Account = System.ServiceProcess.ServiceAccount.LocalSystem; //ServiceAccount.User;
+        /*ProcesServiceInstaller.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
         ProcesServiceInstaller.Username = null;
-        ProcesServiceInstaller.Password = null;
+        ProcesServiceInstaller.Password = null;*/
 
         serviceInstaller.Parent = ProcesServiceInstaller;
         Context = new InstallContext("", cmdline);
