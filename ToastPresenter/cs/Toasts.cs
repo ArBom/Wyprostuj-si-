@@ -8,15 +8,19 @@ using System.Windows;
 
 using Microsoft.Toolkit.Uwp.Notifications;
 using System.IO;
+using Windows.ApplicationModel.Resources;
 
 namespace ToastPresenter
 {
     public static class Toasts
-    {
+    { 
         public static void ShowExampleToast(string ToShow)
         {
             string configFolder = AppDomain.CurrentDomain.BaseDirectory;
             string pathOfPhoto = Path.Combine(configFolder, WyprostujSieBackground.Kinect.PhotoFileName);
+
+            if (ToShow == null)
+                ToShow = Properties.Resources.ResourceManager.GetString("Example");
 
             DateTimeOffset dateTimeOffset = DateTime.Now.AddSeconds(15);
 
@@ -37,12 +41,13 @@ namespace ToastPresenter
         {
             string configFolder = AppDomain.CurrentDomain.BaseDirectory;
             string pathOfPhoto = Path.Combine(configFolder, WyprostujSieBackground.Kinect.PhotoFileName);
+            string TextToShow = Properties.Resources.ResourceManager.GetString("BadPosture");
 
             DateTimeOffset dateTimeOffset = DateTime.Now.AddSeconds(15);
 
             new ToastContentBuilder()
             .SetToastScenario(ToastScenario.Default)
-            .AddText("Wyprostuj się!")
+            .AddText(TextToShow)
             .AddHeroImage(new Uri(pathOfPhoto))
             .Show(toast =>
             {
@@ -56,10 +61,11 @@ namespace ToastPresenter
         public static void ShowTooManyPeopleToast()
         {
             DateTimeOffset dateTimeOffset = DateTime.Now.AddMinutes(10);
+            string TextToShow = Properties.Resources.ResourceManager.GetString("TMPersB");
 
             new ToastContentBuilder()
             .SetToastScenario(ToastScenario.Default)
-            .AddText("Nie wiem na kogo patrzeć.")
+            .AddText(TextToShow)
             .Show(toast =>
             {
                 toast.Tag = "WyprSie";
@@ -72,10 +78,11 @@ namespace ToastPresenter
         public static void ShowNoPersonToast()
         {
             DateTimeOffset dateTimeOffset = DateTime.Now.AddMinutes(3);
+            string TextToShow = Properties.Resources.ResourceManager.GetString("NoPersB");
 
             new ToastContentBuilder()
             .SetToastScenario(ToastScenario.Default)
-            .AddText("Nie widzę cię.")
+            .AddText(TextToShow)
             .Show(toast =>
             {
                 toast.Tag = "WyprSie";

@@ -343,21 +343,20 @@ namespace WyprostujSieBackground
         {
             string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var configFolder = Path.Combine(commonAppData, "WyprostujSie");
-            var PicPath = Path.Combine(configFolder, PhotoFileName);
+            var PicPath1 = Path.Combine(configFolder, PhotoFileName);
 
-            PicPath = "C://Users//arkad//AppData//Roaming//WyprostujSie//photo.jpg"; //TODO
-            //using (
+            var PicPath = "C://Users//arkad//AppData//Roaming//WyprostujSie//photo.jpg"; //TODO
+
+            var temp = String.Equals(PicPath1, PicPath);
+
             File.Delete(PicPath);
             FileStream stream = new FileStream(PicPath, FileMode.CreateNew);
-               // )
-           // {
-                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
 
-                encoder.Frames.Add(BitmapFrame.Create(colorBitmap));
-                encoder.Save(stream);
+            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(colorBitmap));
+            encoder.Save(stream);
 
             stream.Close();
-            //}
 
             return PicPath;
         }

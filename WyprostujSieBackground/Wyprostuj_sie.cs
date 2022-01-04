@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
-//using System.Threading;
 using System.Timers;
 
 namespace WyprostujSieBackground

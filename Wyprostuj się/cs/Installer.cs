@@ -27,10 +27,6 @@ public class MyProjectInstaller : Installer
         AbsolPath = String.Format("/assemblypath={0}", AbsolPath);
         String[] cmdline = { AbsolPath };
 
-        /*ProcesServiceInstaller.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
-        ProcesServiceInstaller.Username = null;
-        ProcesServiceInstaller.Password = null;*/
-
         serviceInstaller.Parent = ProcesServiceInstaller;
         Context = new InstallContext("", cmdline);
 
