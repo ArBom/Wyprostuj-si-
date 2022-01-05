@@ -124,8 +124,6 @@ namespace WyprostujSie
             Task.Run(() =>
             {
                 kinect.newData += UpdateScreen;
-                //kinect.takenPic += ShowNot;
-                //kinect.personAtPhoto += NumOfPeoleChanged;
             });
 
             Brush backgroundColor;

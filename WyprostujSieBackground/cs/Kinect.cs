@@ -41,7 +41,7 @@ namespace WyprostujSieBackground
         public WriteableBitmap colorBitmap = null;
 
         public delegate void PersonAtPhoto(int howMany);
-        public delegate void TakenPic(Uri uri);
+        public delegate void TakenPic(/*Uri uri*/);
         public Action newData = null;
         public TakenPic takenPic = null;
         public PersonAtPhoto personAtPhoto = null;
@@ -51,14 +51,6 @@ namespace WyprostujSieBackground
         public double SpineAn { get; private set; } = 0;
         public double BokAn { get; private set; } = 0;
         public double NeckAn { get; private set; } = 0;
-
-        readonly double SpineAnTreshold;
-        readonly double BokAnTreshold;
-        readonly double NeckAnTreshold;
-
-        readonly bool SpineAnWatched;
-        readonly bool BokAnWatched;
-        readonly bool NeckAnWatched;
 
         private const float InferredZPositionClamp = 0.1f;
 
@@ -94,24 +86,6 @@ namespace WyprostujSieBackground
 
                 if (head.TrackingState == TrackingState.Tracked)
                     NeckAn = Math.Atan2(head.Position.Y - neck.Position.Y, head.Position.X - neck.Position.X) - SpineAn;
-            }
-
-            if (SpineAnWatched)
-            {
-                if (SpineAn > SpineAnTreshold)
-                    takePic = true;
-            }
-
-            if (BokAnWatched)
-            {
-                if (BokAn > BokAnTreshold)
-                    takePic = true;
-            }
-
-            if (NeckAnWatched)
-            {
-                if (NeckAn > NeckAnTreshold)
-                    takePic = true;
             }
         }
 
@@ -255,8 +229,8 @@ namespace WyprostujSieBackground
                 {
                     string Path = SaveColorBitmap();
                     takePic = false;
-                    Uri uriOfPic = new Uri(Path, UriKind.Absolute);
-                    takenPic?.Invoke(uriOfPic);
+                    //Uri uriOfPic = new Uri(Path, UriKind.Absolute);
+                    takenPic?.Invoke(/*uriOfPic*/);
                 }
             }
 
@@ -331,11 +305,15 @@ namespace WyprostujSieBackground
                     Body b = bodies.Where(bc => bc.IsTracked).First();
                     {
                         Angles(ref b);
+
+                        if (!this.draw)
+                            newData?.Invoke();
                     }
                 }
             }
 
-            newData?.Invoke();
+            if (this.draw)
+                newData?.Invoke();
         }
         }
 
@@ -361,15 +339,11 @@ namespace WyprostujSieBackground
             return PicPath;
         }
 
-        public Kinect(bool SpineAnWatched, bool BokAnWatched, bool NeckAnWatched, double SpineAnTreshold, double BokAnTreshold, double NeckAnTreshold)
+        public Kinect()
         {
-            this.SpineAnTreshold = SpineAnTreshold;
-            this.BokAnTreshold = BokAnTreshold;
-            this.NeckAnTreshold = NeckAnTreshold;
-
-            this.SpineAnWatched = SpineAnWatched;
+            /*this.SpineAnWatched = SpineAnWatched;
             this.BokAnWatched = BokAnWatched;
-            this.NeckAnWatched = NeckAnWatched;
+            this.NeckAnWatched = NeckAnWatched;*/
             this.draw = false;
 
             this.kinectSensor = KinectSensor.GetDefault();
@@ -387,11 +361,11 @@ namespace WyprostujSieBackground
         public Kinect(bool draw)
         {
             this.draw = draw;
-
+            /*
             this.SpineAnWatched = false;
             this.BokAnWatched = false;
             this.NeckAnWatched = false;
-
+            */
             this.kinectSensor = KinectSensor.GetDefault();
             this.coordinateMapper = this.kinectSensor.CoordinateMapper;
 
