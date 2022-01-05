@@ -9,29 +9,34 @@ W założeniu będzie to program wykorzystujący sensor Kinect; ułatwiający ut
 
 ## Wyprostuj-si-
 
-![View of window](https://db5pap001files.storage.live.com/y4mIK3R6Niq5UJndQ51_KrH6CwworPAynGEqG7_4_Zb2soRgBpt1PB0hEXQCOFsUB8vAiOjEl7Sm8gGv9Y_iPjXQl_EjRWfxWaF0rgo-ZjSYO-x8dPSa24z2uPgQ6eTotz2FN7n3PLomipqiZvKkqDGeaUfAJXrT65xwRv5QdMMBmgaEvQvBp1cu-exsrZrB52i?width=1080&height=502&cropmode=none "View of Config window")
+```
+PM> Install-Package Newtonsoft.Json -Version 13.0.1
+```
 
-| No. | Sub No. | Descripion |
-| --- | ---     | --- |
-|1.   |         |Run automatically at Windows startup  |
-|2    |a.       ||
-|     |b.       ||
-|     |c.       ||
-|3    |a.       ||
-|     |b.       ||
-|     |c.       ||
-|4    |a.       ||
-|     |b.       ||
-|     |c.       ||
-|5.   |         ||
-|6.   |         ||
-|7.   |         |Camera view|
-|8.   |         |Status Bar|
-|9.   |         |Detected bodies view|
+![View of window](https://db5pap001files.storage.live.com/y4mnzs5Rn8WmDn00umudADW_6LflxN_Jwm9aZAz29tcbdXgn-07k6HqSGpN5ehdLfECRlR-zZmIGTH8F6xOXUPTZgTzCqPRCyNSfy0hSeIBEaWcEyCc0TfUEVfoWD34gp1FRPiZa684lkd41MIYGAY-HN8lHshSv3_Detdq4vbDJNfFELDYv9gnUoHyx2SrLKPw?width=1080&height=502&cropmode=none "View of Config window")
+
+|No. |Sub No. |Descripion                                                         |Comment                                              |
+|--- |---     |---                                                                |---                                                  |
+|1.  |        |Run automatically at Windows startup                               |You have to run app as admin to change this option   |
+|2   |a.      |                                                                   |                                                     |
+|    |b.      |Slider to change acceptable value of forward head position ratio   |It's possible to change if CheckBox 2a. is checked   |
+|    |c.      |The current forward head position ratio                            | It's red while current position ratio is unaccepted |
+|3   |a.      |                                                                   |                                                     |
+|    |b.      |Slider to change acceptable value of leaning body forward ratio    |It's possible to change if CheckBox 3a. is checked   |
+|    |c.      |The current leaning body forward ratio                             | It's red while current position ratio is unaccepted |
+|4   |a.      |                                                                   |                                                     |
+|    |b.      |Slider to change acceptable value of leaning body to one side ratio| It's possible to change if CheckBox 4a. is checked  |
+|    |c.      |The current leaning body to one side ratio                         | It's red while current position ratio is unaccepted |
+|5.  |        |                                                                   |                                                     |
+|6.  |        |                                                                   |                                                     |
+|7.  |        |Camera view                                                        |                                                     |
+|8.  |        |Status Bar                                                         |                                                     |
+|9.  |        |Detected bodies view                                               |                                                     |
  
  ## WyprostujSieBackground
 
 ```
+PM> Install-Package Newtonsoft.Json -Version 13.0.1
 PM> Install-Package Microsoft.Kinect -Version 2.0.1410.19000
 ```
 
