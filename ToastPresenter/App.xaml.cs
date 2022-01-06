@@ -31,6 +31,10 @@ namespace ToastPresenter
                 {
                     Toasts.ShowTooManyPeopleToast();
                 }
+                else if (args[0] == WyprostujSieBackground.Toast.RemoveToastKey)
+                {
+                    Toasts.RemoveToast();
+                }
                 else
                 {
                     Toasts.ShowExampleToast(args[0]);

@@ -45,7 +45,7 @@ namespace WyprostujSieBackground
         public bool TMPersB = true;
 
         readonly public string configFolder;
-        const string fileName = "wyprostujsie.json";
+        const string fileName = "wyprostujsie.json"; //TODO use this string at main win app
 
         private bool DataReadOk() //TODO
         {

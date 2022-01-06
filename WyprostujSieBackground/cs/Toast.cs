@@ -11,6 +11,8 @@ namespace WyprostujSieBackground
 {
     public static class Toast
     {
+        public const string RemoveToastKey = "Remove";
+
         private const uint INVALID_SESSION_ID = 0xFFFFFFFF;
         private const int CREATE_UNICODE_ENVIRONMENT = 0x00000400;
         private const int CREATE_NO_WINDOW = 0x08000000;

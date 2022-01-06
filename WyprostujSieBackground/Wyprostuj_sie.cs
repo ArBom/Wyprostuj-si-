@@ -40,12 +40,12 @@ namespace WyprostujSieBackground
 
             if (data.SpineAnB || data.NeckAnB || data.BokAnB)
             {
-                kinect.newData += newAngles;
+                kinect.newData += NewAngles;
             }
 
             if (data.NoPersB || data.TMPersB)
             {
-                kinect.personAtPhoto += menInPhotoChanged;
+                kinect.personAtPhoto += MenInPhotoChanged;
             }
 
             kinect.takenPic += ShowToast;
@@ -53,7 +53,7 @@ namespace WyprostujSieBackground
             InitializeComponent();
         }
 
-        protected void newAngles()
+        protected void NewAngles()
         {
             if (false)
             {
@@ -62,18 +62,20 @@ namespace WyprostujSieBackground
             }
         }
 
-        protected void menInPhotoChanged (int howMany)
+        protected void MenInPhotoChanged (int howMany)
         {
             if (howMany == 0 && data.NoPersB)
             {
                 Toast.ShowForDebug(Data.NoPersBKey);
             }
 
-            if (howMany > 1 && data.TMPersB)
+            else if (howMany == 1)
+                Toast.ShowForDebug(Toast.RemoveToastKey);
+
+            else if (howMany > 1 && data.TMPersB)
             {
                 Toast.ShowForDebug(Data.NoPersBKey);
                 TPComLinArg = Data.TMPersBKey;
-
             }
         }
 

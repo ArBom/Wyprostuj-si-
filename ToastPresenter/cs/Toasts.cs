@@ -9,11 +9,14 @@ using System.Windows;
 using Microsoft.Toolkit.Uwp.Notifications;
 using System.IO;
 using Windows.ApplicationModel.Resources;
+using Windows.UI.Notifications;
 
 namespace ToastPresenter
 {
     public static class Toasts
     { 
+        private const string Tag = "WyprSie";
+
         public static void ShowExampleToast(string ToShow)
         {
             string configFolder = AppDomain.CurrentDomain.BaseDirectory;
@@ -30,7 +33,7 @@ namespace ToastPresenter
             .AddHeroImage(new Uri(pathOfPhoto))
             .Show(toast =>
             {
-                toast.Tag = "WyprSie";
+                toast.Tag = Tag;
                 toast.SuppressPopup = false;
                 toast.ExpirationTime = dateTimeOffset;
                 toast.ExpiresOnReboot = false;
@@ -43,7 +46,7 @@ namespace ToastPresenter
             string pathOfPhoto = Path.Combine(configFolder, WyprostujSieBackground.Kinect.PhotoFileName);
             string TextToShow = Properties.Resources.ResourceManager.GetString("BadPosture");
 
-            DateTimeOffset dateTimeOffset = DateTime.Now.AddSeconds(15);
+            DateTimeOffset dateTimeOffset = DateTime.Now.AddMinutes(3);
 
             new ToastContentBuilder()
             .SetToastScenario(ToastScenario.Default)
@@ -51,7 +54,7 @@ namespace ToastPresenter
             .AddHeroImage(new Uri(pathOfPhoto))
             .Show(toast =>
             {
-                toast.Tag = "WyprSie";
+                toast.Tag = Tag;
                 toast.SuppressPopup = false;
                 toast.ExpirationTime = dateTimeOffset;
                 toast.ExpiresOnReboot = false;
@@ -68,7 +71,7 @@ namespace ToastPresenter
             .AddText(TextToShow)
             .Show(toast =>
             {
-                toast.Tag = "WyprSie";
+                toast.Tag = Tag;
                 toast.SuppressPopup = true;
                 toast.ExpirationTime = dateTimeOffset;
                 toast.ExpiresOnReboot = false;
@@ -77,7 +80,7 @@ namespace ToastPresenter
 
         public static void ShowNoPersonToast()
         {
-            DateTimeOffset dateTimeOffset = DateTime.Now.AddMinutes(3);
+            DateTimeOffset dateTimeOffset = DateTime.Now.AddMinutes(5);
             string TextToShow = Properties.Resources.ResourceManager.GetString("NoPersB");
 
             new ToastContentBuilder()
@@ -85,11 +88,16 @@ namespace ToastPresenter
             .AddText(TextToShow)
             .Show(toast =>
             {
-                toast.Tag = "WyprSie";
+                toast.Tag = Tag;
                 toast.SuppressPopup = false;
                 toast.ExpirationTime = dateTimeOffset;
                 toast.ExpiresOnReboot = false;
             });
+        }
+
+        public static void RemoveToast()
+        {
+            ToastNotificationManagerCompat.History.Remove(Tag);
         }
     }
 }
