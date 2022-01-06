@@ -91,7 +91,7 @@ namespace WyprostujSieBackground
         {
             this.toSave = toSave;
 
-            string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData); //TODO There is a bug!!! (manifestation at Windows Service process)
             configFolder = Path.Combine(commonAppData, "WyprostujSie");
 
             if (!Directory.Exists(configFolder))

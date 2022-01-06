@@ -17,6 +17,7 @@ namespace WyprostujSieBackground
         Data data;
         Timer timer;
         KalmanFilter[] KalFils;
+        bool IsUserQuirk;
         string TPComLinArg = "";
 
         public Wyprostuj_sie()
@@ -40,6 +41,7 @@ namespace WyprostujSieBackground
 
             if (data.SpineAnB || data.NeckAnB || data.BokAnB)
             {
+                IsUserQuirk = false;
                 kinect.newData += NewAngles;
             }
 
@@ -53,12 +55,28 @@ namespace WyprostujSieBackground
             InitializeComponent();
         }
 
-        protected void NewAngles()
+        protected void NewAngles() //TODO use kalman filter
         {
-            if (false)
+            if ((data.BokAnB && Math.Abs(kinect.BokAn - 1.57f) > data.BokAnD / 10) 
+             || (data.NeckAnB && Math.Abs(kinect.NeckAn - 0) > data.NeckAnD / 10)
+             || (data.SpineAnB && Math.Abs(kinect.SpineAn - 1.57f) > data.SpineAnD / 10))
             {
-                TPComLinArg = Data.BadPostureKey;
-                kinect.takePic = true;
+                if (!IsUserQuirk)
+                {
+                    IsUserQuirk = true;
+                    TPComLinArg = Data.BadPostureKey;
+                    kinect.takePic = true;
+                    timer.Interval = 100;
+                }
+            }
+            else
+            {
+                if (IsUserQuirk)
+                {
+                    IsUserQuirk = false;
+                    Toast.ShowForDebug(Toast.RemoveToastKey);
+                    timer.Interval = 1000;
+                }
             }
         }
 
@@ -66,14 +84,20 @@ namespace WyprostujSieBackground
         {
             if (howMany == 0 && data.NoPersB)
             {
+                timer.Interval = 250;
                 Toast.ShowForDebug(Data.NoPersBKey);
             }
 
             else if (howMany == 1)
+            {
+                timer.Interval = 1000;
+                IsUserQuirk = false;
                 Toast.ShowForDebug(Toast.RemoveToastKey);
+            }
 
             else if (howMany > 1 && data.TMPersB)
             {
+                timer.Interval = 250;
                 Toast.ShowForDebug(Data.NoPersBKey);
                 TPComLinArg = Data.TMPersBKey;
             }
@@ -99,6 +123,7 @@ namespace WyprostujSieBackground
             timer.Elapsed -= onTick;
             timer.Stop();
             timer = null;
+
             kinect = null;
         }
     }
