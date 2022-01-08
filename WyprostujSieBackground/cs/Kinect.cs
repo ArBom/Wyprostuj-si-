@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -16,7 +14,7 @@ using Microsoft.Kinect;
 
 namespace WyprostujSieBackground
 {
-    public enum OnTick { Always, Waiting, Going};
+    public enum StudyData { Always, Waiting, KeepGoing};
 
     public class Kinect
     {
@@ -32,7 +30,7 @@ namespace WyprostujSieBackground
         private readonly Brush inferredJointBrush = Brushes.Yellow;
         private readonly Brush trackedJointBrush = new SolidColorBrush(Color.FromArgb(255, 68, 192, 68));
 
-        public OnTick onTick;
+        public StudyData studyData;
         private readonly bool draw;
         public bool takePic = false;
 
@@ -186,10 +184,10 @@ namespace WyprostujSieBackground
 
         public void MultisourceFrameArrived(object sender, MultiSourceFrameArrivedEventArgs e)
         {
-            if (this.onTick == OnTick.Always || this.onTick == OnTick.Going || takePic)
+            if (this.studyData == StudyData.Always || this.studyData == StudyData.KeepGoing || takePic)
             {
-                if (this.onTick == OnTick.Going)
-                    this.onTick = OnTick.Waiting;
+                if (this.studyData == StudyData.KeepGoing)
+                    this.studyData = StudyData.Waiting;
 
                 MultiSourceFrame reference = e.FrameReference.AcquireFrame();
 
@@ -229,8 +227,7 @@ namespace WyprostujSieBackground
                 {
                     string Path = SaveColorBitmap();
                     takePic = false;
-                    //Uri uriOfPic = new Uri(Path, UriKind.Absolute);
-                    takenPic?.Invoke(/*uriOfPic*/);
+                    takenPic?.Invoke();
                 }
             }
 
@@ -319,13 +316,7 @@ namespace WyprostujSieBackground
 
         string SaveColorBitmap()
         {
-            string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var configFolder = Path.Combine(commonAppData, "WyprostujSie");
-            var PicPath1 = Path.Combine(configFolder, PhotoFileName);
-
-            var PicPath = "C://Users//arkad//AppData//Roaming//WyprostujSie//photo.jpg"; //TODO
-
-            var temp = String.Equals(PicPath1, PicPath);
+            string PicPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PhotoFileName);
 
             File.Delete(PicPath);
             FileStream stream = new FileStream(PicPath, FileMode.CreateNew);
@@ -341,9 +332,6 @@ namespace WyprostujSieBackground
 
         public Kinect()
         {
-            /*this.SpineAnWatched = SpineAnWatched;
-            this.BokAnWatched = BokAnWatched;
-            this.NeckAnWatched = NeckAnWatched;*/
             this.draw = false;
 
             this.kinectSensor = KinectSensor.GetDefault();
@@ -353,7 +341,7 @@ namespace WyprostujSieBackground
             this.displayWidth = frameDescription.Width;
             this.displayHeight = frameDescription.Height;
 
-            onTick = OnTick.Waiting;
+            studyData = StudyData.Waiting;
 
             StartWork();
         }
@@ -361,11 +349,7 @@ namespace WyprostujSieBackground
         public Kinect(bool draw)
         {
             this.draw = draw;
-            /*
-            this.SpineAnWatched = false;
-            this.BokAnWatched = false;
-            this.NeckAnWatched = false;
-            */
+
             this.kinectSensor = KinectSensor.GetDefault();
             this.coordinateMapper = this.kinectSensor.CoordinateMapper;
 
@@ -373,7 +357,7 @@ namespace WyprostujSieBackground
             this.displayWidth = frameDescription.Width;
             this.displayHeight = frameDescription.Height;
 
-            onTick = OnTick.Always;
+            studyData = StudyData.Always;
             StartWork();
         }
 

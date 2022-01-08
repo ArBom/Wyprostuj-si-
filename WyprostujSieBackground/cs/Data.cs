@@ -45,6 +45,7 @@ namespace WyprostujSieBackground
         public bool TMPersB = true;
 
         readonly public string configFolder;
+        public const string AppDataFolderName = "WyprostujSie";
         const string fileName = "wyprostujsie.json"; //TODO use this string at main win app
 
         private bool DataReadOk() //TODO
@@ -91,8 +92,15 @@ namespace WyprostujSieBackground
         {
             this.toSave = toSave;
 
-            string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData); //TODO There is a bug!!! (manifestation at Windows Service process)
-            configFolder = Path.Combine(commonAppData, "WyprostujSie");
+            if (toSave)
+            {
+                string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                configFolder = Path.Combine(commonAppData, AppDataFolderName);
+            }
+            else
+            {
+                configFolder = AppDomain.CurrentDomain.BaseDirectory;
+            }
 
             if (!Directory.Exists(configFolder))
                 Directory.CreateDirectory(configFolder);

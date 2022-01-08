@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
 using System.ServiceProcess;
-using System.Text;
 using System.Timers;
 
 namespace WyprostujSieBackground
@@ -110,7 +104,7 @@ namespace WyprostujSieBackground
 
         protected void onTick (Object source, ElapsedEventArgs e)
         {
-            kinect.onTick = OnTick.Going;
+            kinect.studyData = StudyData.KeepGoing;
         }
 
         protected override void OnStart(string[] args)

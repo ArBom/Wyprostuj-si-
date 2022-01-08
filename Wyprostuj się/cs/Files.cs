@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
+using System.Globalization;
 
 namespace WyprostujSie
 {
@@ -21,7 +18,7 @@ namespace WyprostujSie
         {
             bool success = true;
 
-            string[] Files = new string[7];
+            string[] Files = new string[8];
             Files[0] = TP;
             Files[1] = WSB;
             Files[2] = "Microsoft.Toolkit.Uwp.Notifications.dll";
@@ -29,7 +26,17 @@ namespace WyprostujSie
             Files[4] = "WyprostujSieBackground.pdb";
             Files[5] = "Microsoft.Kinect.dll";
             Files[6] = "Newtonsoft.Json.dll";
+            Files[7] = "ToastPresenter.resources.dll";
 
+            string language = CultureInfo.CurrentCulture.IetfLanguageTag;
+            string DirectoryPath = Path.Combine(configFolder, language);
+
+            if (!Directory.Exists(DirectoryPath))
+            {
+                Directory.CreateDirectory(DirectoryPath);
+            }
+
+            Files[7] = Path.Combine(language, Files[7]);
 
             foreach (string f in Files)
             {
