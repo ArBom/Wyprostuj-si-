@@ -23,7 +23,7 @@ namespace WyprostujSie
 
         public void DelNotif(string Tag)
         {
-            notificationsList.RemoveAll(t => t.Item1 == Tag);
+            notificationsList.RemoveAll(t => t.Item3 == Tag);
         }
 
         public void UpdNotif(string Content, Brush Background, string Tag)

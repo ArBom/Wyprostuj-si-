@@ -42,7 +42,7 @@ namespace WyprostujSieBackground
         //public delegate void TakenPic();
         public Action newData = null;
         public Action takenPic = null;
-        public System.EventHandler<Microsoft.Kinect.IsAvailableChangedEventArgs> kinectStatusUptate = null;
+        public Action kinectStatusUptate = null;
         public PersonAtPhoto personAtPhoto = null;
 
         private int PersonAtLastPhoto = 0;
@@ -53,7 +53,7 @@ namespace WyprostujSieBackground
 
         private const float InferredZPositionClamp = 0.1f;
 
-        public string StatusText;
+        public bool KinectAvaible;
         private DrawingGroup drawingGroup;
         public DrawingImage ImageSource { get; private set; }
 
@@ -64,12 +64,13 @@ namespace WyprostujSieBackground
         private List<Pen> bodyColors;
 
         public const string PhotoFileName = "photo.jpg";
+        public const string KinectTag = "kinect";
 
         private void Sensor_IsAvailableChanged(object sender, IsAvailableChangedEventArgs e) //TODO
         {
             // on failure, set the status text
-            this.StatusText = this.kinectSensor.IsAvailable ? "RunningStatusText"
-                                                            : "SensorNotAvailableStatusText";
+            this.KinectAvaible = this.kinectSensor.IsAvailable;
+            kinectStatusUptate?.Invoke();
         }
 
         private void Angles (ref Body body)
@@ -353,7 +354,6 @@ namespace WyprostujSieBackground
 
             this.kinectSensor = KinectSensor.GetDefault();
             this.coordinateMapper = this.kinectSensor.CoordinateMapper;
-            kinectSensor.IsAvailableChanged += kinectStatusUptate;
 
             FrameDescription frameDescription = this.kinectSensor.DepthFrameSource.FrameDescription;
             this.displayWidth = frameDescription.Width;

@@ -88,6 +88,15 @@ namespace WyprostujSie.Properties {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu .
+        /// </summary>
+        public static string errorFilesCopy {
+            get {
+                return ResourceManager.GetString("errorFilesCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Its no way to connect with Kinect sensor..
         /// </summary>
         public static string errorKinectConnNotif {

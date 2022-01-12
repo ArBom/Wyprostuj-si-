@@ -150,4 +150,7 @@
   <data name="toManyPersonContent" xml:space="preserve">
     <value>...more than 1 person found</value>
   </data>
+  <data name="errorFilesCopy" xml:space="preserve">
+    <value />
+  </data>
 </root>

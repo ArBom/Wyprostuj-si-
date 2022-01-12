@@ -150,4 +150,7 @@
   <data name="toManyPersonContent" xml:space="preserve">
     <value>...większ. niż 1 os. w polu widzenia</value>
   </data>
+  <data name="errorFilesCopy" xml:space="preserve">
+    <value>Błąd kopiowania plików. Program może działać niepoprawnie.</value>
+  </data>
 </root>

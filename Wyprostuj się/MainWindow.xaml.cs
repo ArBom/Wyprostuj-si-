@@ -55,7 +55,11 @@ namespace WyprostujSie
             }
 
             SetValuaes();
-            Files.CopyFiles(data.configFolder);
+
+            if (!Files.CopyFiles(data.configFolder))
+            {
+                this.notifications.AddNotif(Properties.Resources.errorFilesCopy, Brushes.Yellow, "files");
+            }
 
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Interval = TimeSpan.FromSeconds(5);
@@ -124,32 +128,26 @@ namespace WyprostujSie
             kinect.newData += UpdateScreen;
             kinect.kinectStatusUptate += UpdateKinectStatus;
             if (kinect != null)
-                this.notifications.AddNotif(Properties.Resources.ResourceManager.GetString("KinectOK"), Brushes.LimeGreen, "kinect");
+                this.notifications.AddNotif(Properties.Resources.KinectOK, Brushes.LimeGreen, WyprostujSieBackground.Kinect.KinectTag);
         }
 
-        private void UpdateKinectStatus(object sender, Microsoft.Kinect.IsAvailableChangedEventArgs e)
+        private void UpdateKinectStatus()
         { 
             Brush backgroundColor;
             String content;
 
-            switch (kinect.StatusText)
+            if (kinect.KinectAvaible)
             {
-                case "SensorNotAvailableStatusText":
-                    {
-                        backgroundColor = Brushes.Red;
-                        content = Properties.Resources.errorKinectConnNotif;
-                        break;
-                    }
-                default:
-                    {
-                        backgroundColor = Brushes.Transparent;
-                        content = "";
-                        Tag = "";
-                        break;
-                    }
+                backgroundColor = Brushes.LimeGreen;
+                content = Properties.Resources.KinectOK;
+            }
+            else
+            {
+                backgroundColor = Brushes.Red;
+                content = Properties.Resources.errorKinectConnNotif;
             }
 
-            notifications.AddNotif(content, backgroundColor, "kinect");
+            notifications.UpdNotif(content, backgroundColor, WyprostujSieBackground.Kinect.KinectTag);
         }
         
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
