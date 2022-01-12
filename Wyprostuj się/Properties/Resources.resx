@@ -135,6 +135,9 @@
   <data name="header" xml:space="preserve">
     <value>Let me know in case of...</value>
   </data>
+  <data name="KinectOK" xml:space="preserve">
+    <value>Kinect status: OK</value>
+  </data>
   <data name="noPersonContent" xml:space="preserve">
     <value>...no person found</value>
   </data>

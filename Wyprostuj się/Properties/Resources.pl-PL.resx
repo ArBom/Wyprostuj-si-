@@ -135,6 +135,9 @@
   <data name="header" xml:space="preserve">
     <value>Poinformuj mnie w przypadku...</value>
   </data>
+  <data name="KinectOK" xml:space="preserve">
+    <value>Status sensora kinect: OK</value>
+  </data>
   <data name="noPersonContent" xml:space="preserve">
     <value>...braku wykryt. sylwetek osób</value>
   </data>

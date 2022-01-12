@@ -115,6 +115,15 @@ namespace WyprostujSie.Properties {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Kinect status: OK.
+        /// </summary>
+        public static string KinectOK {
+            get {
+                return ResourceManager.GetString("KinectOK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu ...no person found.
         /// </summary>
         public static string noPersonContent {

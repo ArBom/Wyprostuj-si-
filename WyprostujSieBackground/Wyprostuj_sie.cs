@@ -49,11 +49,11 @@ namespace WyprostujSieBackground
             InitializeComponent();
         }
 
-        protected void NewAngles() //TODO use kalman filter
+        protected void NewAngles()
         {
-            if ((data.BokAnB && Math.Abs(kinect.BokAn - 1.57f) > data.BokAnD / 10) 
-             || (data.NeckAnB && Math.Abs(kinect.NeckAn - 0) > data.NeckAnD / 10)
-             || (data.SpineAnB && Math.Abs(kinect.SpineAn - 1.57f) > data.SpineAnD / 10))
+            if ((data.BokAnB && Math.Abs((float)KalFils[2].Output(kinect.BokAn) - 1.57f) > data.BokAnD / 10) 
+             || (data.NeckAnB && Math.Abs((float)KalFils[1].Output(kinect.NeckAn)) > data.NeckAnD / 10)
+             || (data.SpineAnB && Math.Abs((float)KalFils[0].Output(kinect.SpineAn) - 1.57f) > data.SpineAnD / 10))
             {
                 if (!IsUserQuirk)
                 {

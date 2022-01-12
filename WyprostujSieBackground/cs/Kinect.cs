@@ -39,9 +39,10 @@ namespace WyprostujSieBackground
         public WriteableBitmap colorBitmap = null;
 
         public delegate void PersonAtPhoto(int howMany);
-        public delegate void TakenPic(/*Uri uri*/);
+        //public delegate void TakenPic();
         public Action newData = null;
-        public TakenPic takenPic = null;
+        public Action takenPic = null;
+        public System.EventHandler<Microsoft.Kinect.IsAvailableChangedEventArgs> kinectStatusUptate = null;
         public PersonAtPhoto personAtPhoto = null;
 
         private int PersonAtLastPhoto = 0;
@@ -352,6 +353,7 @@ namespace WyprostujSieBackground
 
             this.kinectSensor = KinectSensor.GetDefault();
             this.coordinateMapper = this.kinectSensor.CoordinateMapper;
+            kinectSensor.IsAvailableChanged += kinectStatusUptate;
 
             FrameDescription frameDescription = this.kinectSensor.DepthFrameSource.FrameDescription;
             this.displayWidth = frameDescription.Width;
@@ -425,8 +427,9 @@ namespace WyprostujSieBackground
             this.kinectSensor.Open();
 
             // set the status text
-            this.StatusText = this.kinectSensor.IsAvailable ? "Kinect podłączony"
-                                                            : "Nie znaleziono Kinect'a";
+            Sensor_IsAvailableChanged(null, null);
+            //this.StatusText = this.kinectSensor.IsAvailable ? "Kinect podłączony"
+            //                                                : "Nie znaleziono Kinect'a";
 
             // Create the drawing group we'll use for drawing
             this.drawingGroup = new DrawingGroup();

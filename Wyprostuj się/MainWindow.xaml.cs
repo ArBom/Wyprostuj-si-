@@ -118,14 +118,17 @@ namespace WyprostujSie
             else
                 bokLabel.Foreground = Brushes.Green;
         }
-        
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Task.Run(() =>
-            {
-                kinect.newData += UpdateScreen;
-            });
+            kinect.newData += UpdateScreen;
+            kinect.kinectStatusUptate += UpdateKinectStatus;
+            if (kinect != null)
+                this.notifications.AddNotif(Properties.Resources.ResourceManager.GetString("KinectOK"), Brushes.LimeGreen, "kinect");
+        }
 
+        private void UpdateKinectStatus(object sender, Microsoft.Kinect.IsAvailableChangedEventArgs e)
+        { 
             Brush backgroundColor;
             String content;
 
@@ -220,7 +223,6 @@ namespace WyprostujSie
             }
 
             await data.Save();
-
         }
 
         private async void NoPersonChB_Click(object sender, RoutedEventArgs e)

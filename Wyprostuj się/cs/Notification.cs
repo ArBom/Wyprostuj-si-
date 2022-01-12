@@ -23,12 +23,13 @@ namespace WyprostujSie
 
         public void DelNotif(string Tag)
         {
-           
+            notificationsList.RemoveAll(t => t.Item1 == Tag);
         }
 
         public void UpdNotif(string Content, Brush Background, string Tag)
         {
-
+            DelNotif(Tag);
+            AddNotif(Content, Background, Tag);
         }
 
         public Notifications()
@@ -39,7 +40,7 @@ namespace WyprostujSie
 
         public Tuple<string, Brush> ChNoti()
         {
-            if (notificationsList == null)
+            if (notificationsList == null || notificationsList.Count == 0)
             {
                 return new Tuple<string, Brush>("", Brushes.Transparent);
             }
