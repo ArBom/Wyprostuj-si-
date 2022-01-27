@@ -157,11 +157,6 @@ namespace WyprostujSie
             using (MyProjectInstaller mpi = new MyProjectInstaller(ExpectedState.Start, data.configFolder)) { };
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private async void SpineChB_Click(object sender, RoutedEventArgs e)
         {
             if (spineChB.IsChecked == true)
@@ -240,16 +235,25 @@ namespace WyprostujSie
             autorunChB.IsEnabled = false;
             UpdateLayout();
 
+            Action AutorunChAction;
             MyProjectInstaller myProjectInstaller;
+
 
             if (autorunChB.IsChecked.Value)
             {
-                myProjectInstaller = new MyProjectInstaller(ExpectedState.Install, data.configFolder);
+                AutorunChAction = () => {
+                    myProjectInstaller = new MyProjectInstaller(ExpectedState.Install, data.configFolder);
+                };
             }
             else
             {
-                myProjectInstaller = new MyProjectInstaller(ExpectedState.Uninstall, data.configFolder);
+                AutorunChAction = () => {
+                    myProjectInstaller = new MyProjectInstaller(ExpectedState.Uninstall, data.configFolder);
+                };
             }
+
+            Task AutorunChTask = new Task(AutorunChAction);
+            AutorunChTask.Start();
 
             autorunChB.IsEnabled = true;
         }

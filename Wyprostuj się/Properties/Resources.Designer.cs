@@ -142,6 +142,15 @@ namespace WyprostujSie.Properties {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu It uses a Kinect sensor to analyse your body posture; It let you know about faulty of them.
+        /// </summary>
+        public static string ServiceInstallerDescr {
+            get {
+                return ResourceManager.GetString("ServiceInstallerDescr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu ...leaning forward.
         /// </summary>
         public static string spineContent {

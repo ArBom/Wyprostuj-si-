@@ -153,4 +153,7 @@
   <data name="errorFilesCopy" xml:space="preserve">
     <value />
   </data>
+  <data name="ServiceInstallerDescr" xml:space="preserve">
+    <value>It uses a Kinect sensor to analyse your body posture; It let you know about faulty of them</value>
+  </data>
 </root>

@@ -39,8 +39,7 @@ public class MyProjectInstaller : Installer
 
         // Info for users
         serviceInstaller.DisplayName = "Wyprostuj się";
-        serviceInstaller.Description = "Wykorzystuje sensor Kinect do analizowania postawy twojego ciała; informuje o jej wadach";
-
+        serviceInstaller.Description = WyprostujSie.Properties.Resources.ServiceInstallerDescr.ToString();
         ServiceController serviceController = new ServiceController(serviceInstaller.ServiceName);
 
         System.Collections.Specialized.ListDictionary stateSaver = new System.Collections.Specialized.ListDictionary();

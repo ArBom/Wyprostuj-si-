@@ -153,4 +153,7 @@
   <data name="errorFilesCopy" xml:space="preserve">
     <value>Błąd kopiowania plików. Program może działać niepoprawnie.</value>
   </data>
+  <data name="ServiceInstallerDescr" xml:space="preserve">
+    <value>Wykorzystuje sensor Kinect do analizowania postawy twojego ciała; informuje o jej wadach</value>
+  </data>
 </root>
