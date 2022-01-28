@@ -255,7 +255,10 @@ namespace WyprostujSie
             Task AutorunChTask = new Task(AutorunChAction);
             AutorunChTask.Start();
 
-            autorunChB.IsEnabled = true;
+            Task UITask = AutorunChTask.ContinueWith(a =>
+            {
+                autorunChB.IsEnabled = true;
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
 }

@@ -133,7 +133,7 @@ namespace WyprostujSie.Properties {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Connecting to a Kinect sensor..
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Connecting to a Kinect sensor takes longer than usual..
         /// </summary>
         public static string KinectUnknown {
             get {

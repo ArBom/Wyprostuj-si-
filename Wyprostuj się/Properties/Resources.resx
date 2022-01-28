@@ -157,6 +157,6 @@
     <value>It uses a Kinect sensor to analyse your body posture; It let you know about faulty of them</value>
   </data>
   <data name="KinectUnknown" xml:space="preserve">
-    <value>Connecting to a Kinect sensor.</value>
+    <value>Connecting to a Kinect sensor takes longer than usual.</value>
   </data>
 </root>

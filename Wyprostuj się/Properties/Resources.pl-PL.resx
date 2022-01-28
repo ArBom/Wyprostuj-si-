@@ -157,6 +157,6 @@
     <value>Wykorzystuje sensor Kinect do analizowania postawy twojego ciała; informuje o jej wadach</value>
   </data>
   <data name="KinectUnknown" xml:space="preserve">
-    <value>Nawiązywanie połęczenia z sensorem Kinect.</value>
+    <value>Nawiązywanie połęczenia z sensorem Kinect trwa dłużej niż zwykle.</value>
   </data>
 </root>
