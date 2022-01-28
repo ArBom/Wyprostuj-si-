@@ -1,5 +1,5 @@
 # Wyprostuj się
-W założeniu będzie to program wykorzystujący sensor Kinect; ułatwiający utrzymanie prawidłowej pozycji ciała podczas pracy przy komputerze.
+Program uses a Kinect sensor to help you hold a healthy body position while you working at the PC. It uses Windows service to run itself with system. Informing is pursue by toast notifications, which are removed if them unactual. Program have polish and english interface.
 ![Sitting of kinect sensor](https://db5pap001files.storage.live.com/y4mbW7yFX3lJFAjXciAay9ES4Iv8lU0kqfiWM9ZQQTChLGOQ2FdxlKCj1eZIL9E16NxprfP2z5R2fnP_aJNyiSIFW8zGbgDRsWRa_2nufQjQS2-OM9WFLT4H_cYAbUv0Twz524awQ1i263yKTf2jppdgfJVuvXlzDw8lgq83VV4W_75t1JKZ52qin2liKXrikqL?width=1024&height=576&cropmode=none "Sitting of kinect sensor")
 
 ## Projects:
@@ -15,23 +15,23 @@ PM> Install-Package Newtonsoft.Json -Version 13.0.1
 
 ![View of window](https://db5pap001files.storage.live.com/y4mnzs5Rn8WmDn00umudADW_6LflxN_Jwm9aZAz29tcbdXgn-07k6HqSGpN5ehdLfECRlR-zZmIGTH8F6xOXUPTZgTzCqPRCyNSfy0hSeIBEaWcEyCc0TfUEVfoWD34gp1FRPiZa684lkd41MIYGAY-HN8lHshSv3_Detdq4vbDJNfFELDYv9gnUoHyx2SrLKPw?width=1080&height=502&cropmode=none "View of Config window")
 
-|No. |Sub No. |Descripion                                                         |Comment                                              |
-|--- |---     |---                                                                |---                                                  |
-|1.  |        |Run automatically at Windows startup                               |You have to run app as admin to change this option   |
-|2   |a.      |                                                                   |                                                     |
-|    |b.      |Slider to change acceptable value of forward head position ratio   |It's possible to change if CheckBox 2a. is checked   |
-|    |c.      |The current forward head position ratio                            | It's red while current position ratio is unaccepted |
-|3   |a.      |                                                                   |                                                     |
-|    |b.      |Slider to change acceptable value of leaning body forward ratio    |It's possible to change if CheckBox 3a. is checked   |
-|    |c.      |The current leaning body forward ratio                             | It's red while current position ratio is unaccepted |
-|4   |a.      |                                                                   |                                                     |
-|    |b.      |Slider to change acceptable value of leaning body to one side ratio| It's possible to change if CheckBox 4a. is checked  |
-|    |c.      |The current leaning body to one side ratio                         | It's red while current position ratio is unaccepted |
-|5.  |        |                                                                   |                                                     |
-|6.  |        |                                                                   |                                                     |
-|7.  |        |Camera view                                                        |                                                     |
-|8.  |        |Status Bar                                                         |                                                     |
-|9.  |        |Detected bodies view                                               |                                                     |
+|No.  | Sub No. | Descripion                                                         | Comment                                            |
+|---  | ---     | ---                                                                | ---                                                |
+|1.   |         |Run automatically at Windows startup                                |You have to run app as admin to change this option  |
+|2    |a.       |Check it to have info about if you move forward your head to much   |
+|     |b.       |Slider to change acceptable value of forward head position ratio    |It's possible to change if CheckBox 2a. is checked  |
+|     |c.       |The current forward head position ratio                             |It's red while current position ratio is unaccepted |
+|3    |a.       |Check it to have info about if you leaning forward to much          |
+|     |b.       |Slider to change acceptable value of leaning body forward ratio     |It's possible to change if CheckBox 3a. is checked  |
+|     |c.       |The current leaning body forward ratio                              |It's red while current position ratio is unaccepted |
+|4    |a.       |Check it to have info about if you leaning to one side to much      |
+|     |b.       |Slider to change acceptable value of leaning body to one side ratio |It's possible to change if CheckBox 4a. is checked  |
+|     |c.       |The current leaning body to one side ratio                          |It's red while current position ratio is unaccepted |
+|5.   |         |Check to getting information about the lack of detected person      |
+|6.   |         |Check to getting information about detected more than one person    |
+|7.   |         |Camera view                                                         |
+|8.   |         |Status Bar                                                          |
+|9.   |         |Detected bodies view                                                |
  
  ## WyprostujSieBackground
 
