@@ -88,7 +88,7 @@ namespace WyprostujSie.Properties {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu .
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu File copy error. The program may not work correctly..
         /// </summary>
         public static string errorFilesCopy {
             get {
@@ -133,6 +133,15 @@ namespace WyprostujSie.Properties {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Connecting to a Kinect sensor..
+        /// </summary>
+        public static string KinectUnknown {
+            get {
+                return ResourceManager.GetString("KinectUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu ...no person found.
         /// </summary>
         public static string noPersonContent {
@@ -160,7 +169,7 @@ namespace WyprostujSie.Properties {
         }
         
         /// <summary>
-        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Ustawienia programu &quot;Wyprostuj się&quot;.
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Setting of &quot;Wyprostuj się&quot; application.
         /// </summary>
         public static string titleBar {
             get {

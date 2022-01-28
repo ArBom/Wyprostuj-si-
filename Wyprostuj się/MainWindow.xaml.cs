@@ -128,7 +128,7 @@ namespace WyprostujSie
             kinect.newData += UpdateScreen;
             kinect.kinectStatusUptate += UpdateKinectStatus;
             if (kinect != null)
-                this.notifications.AddNotif(Properties.Resources.KinectOK, Brushes.LimeGreen, WyprostujSieBackground.Kinect.KinectTag);
+                this.notifications.AddNotif(Properties.Resources.KinectUnknown, Brushes.Red, WyprostujSieBackground.Kinect.KinectTag);
         }
 
         private void UpdateKinectStatus()

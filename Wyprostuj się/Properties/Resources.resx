@@ -145,15 +145,18 @@
     <value>...leaning forward</value>
   </data>
   <data name="titleBar" xml:space="preserve">
-    <value>Ustawienia programu "Wyprostuj się"</value>
+    <value>Setting of "Wyprostuj się" application</value>
   </data>
   <data name="toManyPersonContent" xml:space="preserve">
     <value>...more than 1 person found</value>
   </data>
   <data name="errorFilesCopy" xml:space="preserve">
-    <value />
+    <value>File copy error. The program may not work correctly.</value>
   </data>
   <data name="ServiceInstallerDescr" xml:space="preserve">
     <value>It uses a Kinect sensor to analyse your body posture; It let you know about faulty of them</value>
+  </data>
+  <data name="KinectUnknown" xml:space="preserve">
+    <value>Connecting to a Kinect sensor.</value>
   </data>
 </root>
