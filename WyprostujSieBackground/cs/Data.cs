@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Data;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Newtonsoft.Json;
@@ -46,9 +42,9 @@ namespace WyprostujSieBackground
 
         readonly public string configFolder;
         public const string AppDataFolderName = "WyprostujSie";
-        const string fileName = "wyprostujsie.json"; //TODO use this string at main win app
+        const string fileName = "wyprostujsie.json";
 
-        private bool DataReadOk() //TODO
+        private bool DataReadOk()
         {
             if (File.Exists(Path.Combine(configFolder, fileName)))
                 return true;
