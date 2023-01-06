@@ -7,6 +7,8 @@ Program uses a Kinect sensor to help you hold a healthy body position while you 
 * [WyprostujSieBackground](#WyprostujSieBackground)
 * [ToastPresenter](#ToastPresenter)
 
+![CodeMap](https://db5pap001files.storage.live.com/y4mwXFWFVfQ_f5mzmdkBJaughNcMKbCddYxRi8jfVtQvjqlBcojU43cd_fMtnX3p93DBGI68Fmit5906K9DEj8LyLfn6Gj1d_a3RCkCUgiuN9uctj0k1aLLlT7-CIPlSvb01X77trlDE2deYv7Dym602WB5gq5R8vBmH7hMvBVlNQQWv07X_CMr8kOqTogKUrL1?width=1675&height=901&cropmode=none "CodeMap")
+
 ## Wyprostuj-si-
 
 ```
