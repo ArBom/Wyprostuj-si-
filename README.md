@@ -15,7 +15,7 @@ Program uses a Kinect sensor to help you hold a healthy body position while you 
 PM> Install-Package Newtonsoft.Json -Version 13.0.1
 ```
 
-![View of window](https://db5pap001files.storage.live.com/y4mnzs5Rn8WmDn00umudADW_6LflxN_Jwm9aZAz29tcbdXgn-07k6HqSGpN5ehdLfECRlR-zZmIGTH8F6xOXUPTZgTzCqPRCyNSfy0hSeIBEaWcEyCc0TfUEVfoWD34gp1FRPiZa684lkd41MIYGAY-HN8lHshSv3_Detdq4vbDJNfFELDYv9gnUoHyx2SrLKPw?width=1080&height=502&cropmode=none "View of Config window")
+![WinApp](https://github.com/ArBom/Wyprostuj-si-/assets/59375967/8c6591ee-750d-4911-b007-dd9b43cdec56)
 
 |No.  | Sub No. | Descripion                                                         | Comment                                            |
 |---  | ---     | ---                                                                | ---                                                |
