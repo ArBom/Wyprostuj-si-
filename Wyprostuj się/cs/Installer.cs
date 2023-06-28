@@ -35,6 +35,12 @@ public class MyProjectInstaller : Installer
         // The services are started automaticly.
         serviceInstaller.StartType = ServiceStartMode.Automatic;
 
+        //Service can start with delay
+        serviceInstaller.DelayedAutoStart = true;
+
+        //This service need "KinectMonitor" the service to run
+        serviceInstaller.ServicesDependedOn = new string[] {"KinectMonitor"};
+
         serviceInstaller.ServiceName = ServiceName;
 
         // Info for users
