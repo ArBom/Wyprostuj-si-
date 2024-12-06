@@ -1,13 +1,13 @@
 # Wyprostuj się
 Program uses a Kinect sensor to help you hold a healthy body position while you working at the PC. It uses Windows service to run itself with system. Informing is pursue by toast notifications, which are removed if them unactual. Program have polish and english interface.
-![Sitting of kinect sensor](https://db5pap001files.storage.live.com/y4mbW7yFX3lJFAjXciAay9ES4Iv8lU0kqfiWM9ZQQTChLGOQ2FdxlKCj1eZIL9E16NxprfP2z5R2fnP_aJNyiSIFW8zGbgDRsWRa_2nufQjQS2-OM9WFLT4H_cYAbUv0Twz524awQ1i263yKTf2jppdgfJVuvXlzDw8lgq83VV4W_75t1JKZ52qin2liKXrikqL?width=1024&height=576&cropmode=none "Sitting of kinect sensor")
+![Sitting of kinect sensor](https://github.com/user-attachments/assets/19e9b73e-1a58-4886-bccd-53339c4d0f57)
 
 ## Projects:
 * [Wyprostuj sie](#Wyprostuj-si-)
 * [WyprostujSieBackground](#WyprostujSieBackground)
 * [ToastPresenter](#ToastPresenter)
 
-![CodeMap](https://db5pap001files.storage.live.com/y4mwXFWFVfQ_f5mzmdkBJaughNcMKbCddYxRi8jfVtQvjqlBcojU43cd_fMtnX3p93DBGI68Fmit5906K9DEj8LyLfn6Gj1d_a3RCkCUgiuN9uctj0k1aLLlT7-CIPlSvb01X77trlDE2deYv7Dym602WB5gq5R8vBmH7hMvBVlNQQWv07X_CMr8kOqTogKUrL1?width=1675&height=901&cropmode=none "CodeMap")
+![CodeMap](https://github.com/user-attachments/assets/5f5f26e5-eaae-47cd-b939-b8f7f179e7db)
 
 ## Wyprostuj-si-
 
@@ -42,10 +42,10 @@ PM> Install-Package Newtonsoft.Json -Version 13.0.1
 PM> Install-Package Microsoft.Kinect -Version 2.0.1410.19000
 ```
 
-![Windows service](https://db5pap001files.storage.live.com/y4mbSzEgfD6GGa72hN48JTNjZFvzPJd2sFQvhEiGq-835Ed2gfQBrfY4zxIrpDzZb490znzXNi9IB8S9-GctmzqEtGQ8J2ZgVWX39SeL1CKs0DI_gplEeaysyox2y6znaTVZXKQYX-O_6tXa2_7ToVIIRa_MuETr7Cn1C-TGf1HJoEXsqF1jqhHf_6xTC4B3O61?width=1024&height=338&cropmode=none "Windows service")
+![Windows service](https://github.com/user-attachments/assets/e7db07e2-bc06-4aaa-b6d3-251c8ec46c6e)
 
 ## ToastPresenter
 ```
 PM> Install-Package Microsoft.Toolkit.Uwp.Notifications -Version 7.1.2
 ```
-![Toast](https://db5pap001files.storage.live.com/y4m1M5DvfOpMGcUc82pNzHDN9cpedVDImo8lpXGSLg0kDJaBurABh4dVUHZ0P1AkOABnxDCbJcJ7QAw6-ZgARlFiaOBcMpa2q-7eyZGUWDFwX0Zzvi_NPMbosfPf3709plD9IYUMb8pHFbX0p_-mA7ZPm-me2WPEQiIMq3aywj8gkZXCbhsetvDUbT_P60gEluM?width=827&height=465&cropmode=none "Showing examle a toast notification")
+![Toast](https://github.com/user-attachments/assets/623c746e-e17a-4aba-a462-454db64cd5ae)
